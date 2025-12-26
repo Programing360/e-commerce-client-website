@@ -24,12 +24,12 @@ const AllProduct = () => {
         <div className='mt-10'>
             <h1 className="text-3xl font-bold text-center">All Product</h1>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 container mx-auto mt-12'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 container mx-auto mt-12'>
                 {
                     allProducts.map(product => (
                         <Link to={`/productDetails/${product._id}`}><div key={product._id} className="card bg-base-100 shadow-sm">
 
-                            <figure className="px-6 pt-6 h-60 flex items-center justify-center">
+                            <figure className="px-6 pt-6 h-40 flex items-center justify-center">
                                 <img
                                     src={product.images}
                                     alt={product.name}
@@ -43,6 +43,12 @@ const AllProduct = () => {
                                     {product.name}
                                 </h2>
 
+                                <p className='bg-amber-500 w-24 text-center mx-auto rounded-4xl text-white'>{product.category}</p>
+
+                                {/* Price */}
+                                <p className="text-lg font-bold text-[#e17100]">
+                                    TK {product.price}.00
+                                </p>
                                 {/* Description */}
                                 {/* <p className="text-sm text-gray-600 line-clamp-2">
                                     {product.description}

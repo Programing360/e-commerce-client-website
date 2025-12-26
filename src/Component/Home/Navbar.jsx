@@ -1,4 +1,4 @@
-import React, { use, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import loginImg from '../../assets/account_circle_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.png'
 import { Link, NavLink } from 'react-router';
 import cartImg from '../../assets/shopping_cart_.svg'
@@ -8,9 +8,7 @@ import { UseContext } from '../../Context/UseContext';
 
 const Navbar = () => {
 
-    const { carts, allProducts, totalPrice, setTotalPrice } = use(UseContext)
-    // console.log(carts.length)
-
+    const { carts, allProducts, totalPrice, setTotalPrice } = useContext(UseContext)
 
     useEffect(() => {
         const totalPrice = carts?.reduce((total, cart) => {
@@ -22,11 +20,11 @@ const Navbar = () => {
                 ? total + product.price * cart.quantity
                 : total;
         }, 0);
-        console.log(totalPrice)
-        setTotalPrice(totalPrice)
-    }, [carts,allProducts,setTotalPrice])
 
-    // console.log("Total Price:", totalPrice);
+        setTotalPrice(totalPrice)
+
+    }, [carts, allProducts, setTotalPrice])
+
     const navClass =
         "relative font-medium text-gray-700 hover:text-primary transition " +
         "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 " +
@@ -50,12 +48,17 @@ const Navbar = () => {
         </>
     );
 
+    const [open, setOpen] = useState(!true);
+    const toggle = () => {
+        setOpen(!open);
+    }
+
     return (
         <div>
             <div className='bg-amber-600 text-center text-white py-2'>
                 <p className=''>আমাদের যে কোন পণ্য অর্ডার করতে কল বা WhatsApp করুন:  +8801321208940 |  হট লাইন: 09642-922922</p>
             </div>
-            <div className="navbar shadow bg-[#ffffff]">
+            <div className="navbar w-full shadow bg-[#ffffff]">
                 <div className="navbar-start">
                     <div className="dropdown block lg:hidden">
 
@@ -63,8 +66,12 @@ const Navbar = () => {
                             <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
                             <div className="drawer-content">
                                 {/* Page content here */}
-                                <label htmlFor="my-drawer-1" className=" drawer-button">
-                                    ☰
+                                <label onClick={toggle} htmlFor="my-drawer-1" className=" drawer-button">
+                                    {open ? (
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                    ) : (
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                                    )}
                                 </label>
                             </div>
                             <div className="drawer-side mt-29">
@@ -83,13 +90,41 @@ const Navbar = () => {
                         E-Shop
                     </NavLink>
                 </div>
-                <div className="navbar-end justify-end items-center">
+                <div className="navbar-end">
                     <button className="btn btn-ghost btn-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /> </svg>
+
                     </button>
-                    <button className="btn btn-ghost btn-circle">
-                        <img src={loginImg} alt="" />
-                    </button>
+                    <div className="relative">
+                        <input id="top-drawer" type="checkbox" className="peer hidden" />
+
+                        {/* Button */}
+                        <label htmlFor="top-drawer" className="">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                        </label>
+
+                        {/* Drawer */}
+                        <div className="
+                          fixed top-0 left-0 w-full h-64 bg-base-200 z-50
+                          transform -translate-y-full
+                          peer-checked:translate-y-0
+                          transition-transform duration-300
+                        ">
+                            <label htmlFor="top-drawer" className="btn btn-sm absolute right-4 top-4">
+                                ✕
+                            </label>
+
+                            <ul className="menu p-4">
+                                <li><a>Top Item 1</a></li>
+                                <li><a>Top Item 2</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <Link to='/login'>
+                        <button className="btn btn-ghost btn-circle">
+                            <img src={loginImg} alt="" />
+                        </button>
+                    </Link>
 
                     <div className="drawer w-full drawer-end bg-[#ffffff]">
                         <input id="my-drawer-5" type="checkbox" className="drawer-toggle" />
@@ -100,7 +135,7 @@ const Navbar = () => {
                                 htmlFor="my-drawer-5" className="drawer-button  cursor-pointer">
 
                                 <img src={cartImg} alt="" className='hover:bg-[#e2e2e2] p-2 rounded-full relative' />
-                                <span className="badge badge-sm indicator-item absolute top-0 left-6">{carts.length}</span>
+                                <span className="badge badge-sm bg-[#e17100] text-[#ffffff] indicator-item absolute top-0 left-6 rounded-full">{carts.length}</span>
                             </label>
 
                         </div>

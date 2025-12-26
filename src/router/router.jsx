@@ -3,6 +3,8 @@ import Root from "../Root/Root";
 import Home from '../Component/Home/Home';
 import ProductDetails from '../Pages/ProductDetails';
 import OrderForm from '../Pages/Order/OrdersForm';
+import Login from '../Pages/Authentication/Login';
+import Register from '../Pages/Authentication/Register';
 
 
 
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
                 path:'order',
                 Component:OrderForm,
                 // loader:() => fetch(`http://localhost:5000/cart`)
+            },
+            {
+               path:'/login',
+               Component:Login 
+            },
+            {
+                path:'/register',
+                Component:Register
             }
 
 
