@@ -1,0 +1,64 @@
+import React, { use, useEffect } from 'react';
+import useAxiosSecure from '../Hook/useAxiosSecure';
+import CartDetails from './CartDetails';
+import { UseContext } from '../Context/UseContext';
+
+const AddToCard = () => {
+  const { carts, setCarts, allProducts, setAllProducts } = use(UseContext)
+  const axiosSecure = useAxiosSecure();
+
+
+  // Load products
+  useEffect(() => {
+    axiosSecure.get('/allProduct')
+      .then(res => setAllProducts(res?.data || []));
+  }, [axiosSecure, setAllProducts]);
+
+
+  // Load cart
+  useEffect(() => {
+    axiosSecure.get("/cart").then(res => {
+      setCarts(res?.data || []);
+    });
+  }, [axiosSecure, setCarts]);
+  
+
+  // 🔴 REMOVE HANDLER (Perfect)
+  const handleRemove = async (cartId) => {
+    try {
+      const { data } = await axiosSecure.delete(`/cart/delete/${cartId}`);
+      // console.log(data)
+      if (data.deletedCount === 1) {
+        // ✅ instant UI update
+        setCarts(prev => prev.filter(item => item._id !== cartId));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <div>
+      
+
+      {carts?.map(cart => {
+        const product = allProducts.find(
+          p => p._id === cart.productId
+        );
+
+        if (!product) return null;
+
+        return (
+          <CartDetails
+            key={cart._id}          // ✅ cart id
+            cart={cart}             // ✅ cart document
+            product={product}       // ✅ product data
+            handleRemove={handleRemove}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+export default AddToCard;
