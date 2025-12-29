@@ -1,29 +1,47 @@
-import useAxiosSecure from "../Hook/useAxiosSecure";
 
-const CartDetails = ({ cart, product, handleRemove }) => {
-    // const {amount, setAmount} = useContext(UseContext)
-    // const {price} =product
+import { useContext } from "react";
+import { UseContext } from "../Context/UseContext";
 
-    const AxiosSecure = useAxiosSecure()
 
-    // useEffect(() => {
-    //     AxiosSecure.get
-    // },[])
-     
+const CartDetails = ({ cart, product, handleRemove  }) => {
+  const { decrease, increase } = useContext(UseContext);
   return (
-    <div className="p-4 border rounded mb-3">
+    <div className="p-4 border border-[#fe8838] rounded mb-3">
       <div className="flex gap-4">
-        <img src={product.images} className="w-20 h-20" />
+        <img
+          src={product.images}
+          alt={product.name}
+          className="w-20 h-20 object-cover rounded"
+        />
 
         <div className="flex-1">
-          <h2>{product.name}</h2>
+          <h2 className="font-semibold">{product.name}</h2>
           <p>TK {product.price}</p>
 
-          <div className="flex items-center gap-3">
-            <span>Qty: {cart.quantity}</span>
+          <div className="flex items-center gap-3 bg-gray-200 p-2 w-max rounded mt-2">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => decrease(cart._id)}
+                className="btn btn-sm"
+              >
+                −
+              </button>
+
+              <span className="min-w-6 text-center font-medium">
+                {cart.quantity}
+              </span>
+
+              <button
+                onClick={() => increase(cart._id)}
+                className="btn btn-sm"
+              >
+                +
+              </button>
+            </div>
+
             <button
               onClick={() => handleRemove(cart._id)}
-              className="text-red-500 underline cursor-pointer"
+              className="text-red-500 underline cursor-pointer ml-3"
             >
               Remove
             </button>

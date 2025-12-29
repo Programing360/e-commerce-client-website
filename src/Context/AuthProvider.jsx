@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { UseContext } from './UseContext';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from '../Pages/Authentication/firebase.init';
+import useAxiosSecure from '../Hook/useAxiosSecure';
 
 const AuthProvider = ({ children }) => {
 
@@ -12,9 +13,10 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState('');
-
-
+     const [count, setCount] = useState(0);
     // Email login
+
+    const axiosSecure = useAxiosSecure();
     const loginWithUser = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
@@ -47,6 +49,29 @@ const AuthProvider = ({ children }) => {
         return () => unsub();
     }, []);
 
+    const increase = async (cartId) => {
+        setCarts(prevCarts => {
+            return prevCarts.map(cart => {
+                if (cart._id === cartId) {
+                    return { ...cart, quantity: cart.quantity + 1 };
+                }
+                return cart;
+            });
+        });
+        await axiosSecure.patch(`/cart/increase/${cartId}`);
+    };
+
+    const decrease = async (cartId) => {
+        setCarts(prevCarts => {
+            return prevCarts.map(cart => {
+                if (cart._id === cartId && cart.quantity > 1) {
+                    return { ...cart, quantity: cart.quantity - 1 };
+                }
+                return cart;
+            });
+        });
+        await axiosSecure.patch(`/cart/decrease/${cartId}`);
+    };  
 
     const dataInfo = {
         amount,
@@ -64,7 +89,11 @@ const AuthProvider = ({ children }) => {
         googleLogin,
         UserLogout,
         errorMessage,
-        setErrorMessage
+        setErrorMessage,
+        setCount,
+        count,
+        increase,
+        decrease
 
     }
 

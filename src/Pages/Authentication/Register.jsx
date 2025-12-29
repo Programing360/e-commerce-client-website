@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { UseContext } from '../../Context/UseContext';
 import { useForm } from 'react-hook-form';
@@ -51,7 +51,7 @@ const Register = () => {
 
                 <div className="card bg-base-100 w-full max-w-3xl py-10 shadow-2xl">
                     <div className="text-center">
-                        <h1 className="text-5xl font-bold text-amber-500">
+                        <h1 className="text-5xl font-bold text-amber-500 px-6">
                             Register Now!
                         </h1>
                     </div>
@@ -65,7 +65,7 @@ const Register = () => {
                                 <input
                                     type="text"
                                     {...register("name", { required: "Name is required" })}
-                                    className="input w-sm border-amber-600"
+                                    className="input lmd:w-sm border-amber-600"
                                     placeholder="Your Name"
                                 />
                                 {errors.name && (
@@ -79,7 +79,7 @@ const Register = () => {
                                 <input
                                     type="email"
                                     {...register("email", { required: "Email is required" })}
-                                    className="input w-sm border-amber-600"
+                                    className="input md:w-sm border-amber-600"
                                     placeholder="Email"
                                 />
 
@@ -94,7 +94,7 @@ const Register = () => {
                                             message: "Minimum 6 characters"
                                         }
                                     })}
-                                    className="input w-sm border-amber-600"
+                                    className="input lg:w-sm border-amber-600"
                                     placeholder="Password"
                                 />
                                 {errors.password && (

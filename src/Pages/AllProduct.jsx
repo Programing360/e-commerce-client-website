@@ -24,7 +24,7 @@ const AllProduct = () => {
         <div className='mt-10'>
             <h1 className="text-3xl font-bold text-center">All Product</h1>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 container mx-auto mt-12'>
+            <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 container mx-auto mt-12 px-2'>
                 {
                     allProducts.map(product => (
                         <Link to={`/productDetails/${product._id}`}><div key={product._id} className="card bg-base-100 shadow-sm">
@@ -53,12 +53,12 @@ const AllProduct = () => {
                                 {/* <p className="text-sm text-gray-600 line-clamp-2">
                                     {product.description}
                                 </p> */}
-
-                                <Link to='/order'>
-                                    <div className="card-actions justify-center mt-auto">
+                                <div className="card-actions justify-center mt-auto">
+                                    <Link to='/order'>
                                         <button className="btn bg-[#e17100] text-[#ffffff]">Order Now</button>
-                                    </div>
-                                </Link>
+                                    </Link>
+                                </div>
+
                             </div>
 
                         </div></Link>

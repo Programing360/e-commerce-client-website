@@ -1,4 +1,4 @@
-import React, { use} from 'react';
+import React, { useContext } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import useAxiosSecure from '../Hook/useAxiosSecure';
 import { toast, ToastContainer } from 'react-toastify';
@@ -6,108 +6,118 @@ import AddToCard from './AddToCard';
 import { UseContext } from '../Context/UseContext';
 
 const ProductDetails = () => {
-
-    const { setCarts } = use(UseContext)
-    // console.log(id)
+    const { carts, setCarts } = useContext(UseContext);
     const { images, name, price, discountPrice, description, category, _id } = useLoaderData();
+    const axiosSecure = useAxiosSecure();
+   
 
-    const AxiosSecure = useAxiosSecure()
-
-    const notify = () => toast('Product added to cart 🛒');
+    const notify = () => toast.success('Product added to cart 🛒');
 
     const reloadCart = async () => {
-        const res = await AxiosSecure.get('/cart');
+        const res = await axiosSecure.get('/cart');
         setCarts(res.data || []);
     };
 
     const handleAddToCart = async (productId) => {
         try {
-            const userId = productId; // or from auth context
+            const existingCart = carts.find(item => item.productId === productId);
+            // ✅ PRODUCT ALREADY IN CART → UPDATE QTY
+            if (existingCart) {
+                const newQty = existingCart.quantity + 1;
 
+                const { data } = await axiosSecure.put(
+                    `/cart/update/${existingCart._id}`,
+                    { quantity: newQty }
+                );
+                if (data.modifiedCount === 1) {
+                    const updated = carts.map(item =>
+                        item._id === existingCart._id
+                            ? { ...item, quantity: newQty }
+                            : item
+                    );
+                    setCarts(updated);
+                    notify();
+                }
+                return;
+            }
+
+            // ✅ NEW PRODUCT → ADD TO CART
             const cartInfo = {
-                userId,
+                userId: productId,   // ⚠️ from auth context
                 productId,
                 quantity: 1,
             };
 
+            const res = await axiosSecure.post('/cart/add', cartInfo);
 
-            await AxiosSecure.post('/cart/add', cartInfo).then(res => {
-                if (res.data?.insertedId) {
-                    notify()
-                    reloadCart()
-                    console.log(res.data)
-                }
-            })
-                .catch(err => {
-                    alert(err.message)
-                })
-
-
-
+            if (res.data?.insertedId) {
+                notify();
+                reloadCart();
+            }
         } catch (error) {
-            console.error(error);
-            alert('Failed to add to cart');
+            if (error) {
+                toast.error('Failed to add to cart');
+            }
         }
     };
 
     return (
         <div className="min-h-screen bg-base-200">
-            <div className=" mx-auto px-6 py-12 lg:flex lg:gap-12">
+            <div className="mx-auto px-6 py-12 lg:flex lg:gap-12">
 
-                {/* Sticky Image */}
-                <div className="lg:w-1/2 lg:sticky lg:top-20 mb-6 lg:mb-0">
+                {/* IMAGE */}
+                <div className="lg:w-1/2 lg:sticky lg:top-20 mb-6">
                     <img
                         src={images}
                         alt={name}
-                        className="lg:max-w-xl md:w-md mx-auto h-auto rounded-lg object-cover text-center"
+                        className="lg:max-w-xl mx-auto rounded-lg object-cover"
                     />
                 </div>
 
-                {/* Text Content */}
-                <div className="lg:w-1/2 space-y-4 text-gray-700 font-medium lg:overflow-auto h-225 ">
-                    <div className='mb-13'>
-                        <h1 className="text-2xl lg:text-4xl font-bold text-gray-900 mb-4">{name}</h1>
-                        <div className='flex items-center gap-5 '>
-                            <p className='text-2xl'>TK {price}</p>
-                            <del className='text-gray-400'>TK {discountPrice}.00</del>
-                            <p className='bg-amber-500 px-2 rounded-4xl text-white'>{category}</p>
-                        </div>
+                {/* DETAILS */}
+                <div className="lg:w-1/2 space-y-4 text-gray-700 font-medium">
+
+                    <h1 className="text-4xl font-bold">{name}</h1>
+
+                    <div className="flex items-center gap-4">
+                        <p className="text-2xl">TK {price}</p>
+                        <del className="text-gray-400">TK {discountPrice}</del>
+                        <span className="bg-amber-500 px-3 rounded-full text-white">
+                            {category}
+                        </span>
                     </div>
 
-
-
-                    <div className="drawer drawer-end ">
+                    {/* ADD TO CART DRAWER */}
+                    <div className="drawer drawer-end">
                         <input id="my-drawer-5" type="checkbox" className="drawer-toggle" />
-                        <div className="drawer-content">
 
+                        <div className="drawer-content">
                             <label
                                 onClick={() => handleAddToCart(_id)}
-                                htmlFor="my-drawer-5" className="drawer-button btn w-full bg-[#1a0e03] text-white hover:bg-amber-400">Add to Cart</label>
+                                htmlFor="my-drawer-5"
+                                className="btn w-full bg-[#1a0e03] text-white hover:bg-amber-400"
+                            >
+                                Add to Cart
+                            </label>
                             <ToastContainer />
                         </div>
 
                         <div className="drawer-side">
-                            <label htmlFor="my-drawer-5" aria-label="close sidebar" className="drawer-overlay"></label>
+                            <label htmlFor="my-drawer-5" className="drawer-overlay"></label>
                             <ul className="menu bg-base-200 min-h-full w-80 p-4">
-                                <AddToCard></AddToCard>
-
+                                <AddToCard />
                             </ul>
                         </div>
-
                     </div>
 
+                    {/* ORDER NOW */}
+                    <Link to="/order">
+                        <button className="btn w-full bg-[#e17100] text-white hover:bg-amber-400">
+                            Order Now
+                        </button>
+                    </Link>
 
-
-
-                    <div>
-                        <Link to='/order'>
-                            <button
-                                // onClick={() => handleAddToCart(_id)}
-                                className='btn w-full bg-[#e17100] text-white hover:bg-amber-400 drawer-button'>Order Now</button>
-                        </Link>
-
-                    </div>
-
+                    {/* DESCRIPTION */}
                     <div tabIndex={0} className="collapse bg-base-100 border-base-300 border">
                         <input type="checkbox" />
                         <div className="collapse-title font-semibold">
@@ -143,10 +153,9 @@ const ProductDetails = () => {
                         </div>
                     </div>
 
-
-
                 </div>
             </div>
+            
         </div>
     );
 };

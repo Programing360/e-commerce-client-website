@@ -1,6 +1,7 @@
-import { use} from "react";
+
 import { Navigate } from "react-router";
 import { UseContext } from "../Context/UseContext";
+import { use } from "react";
 
 
 const PrivateRoute = ({ children }) => {
