@@ -1,13 +1,17 @@
-import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { UseContext } from '../../Context/UseContext';
 import { useForm } from 'react-hook-form';
 import { updateProfile } from 'firebase/auth';
+import { FiEyeOff } from 'react-icons/fi';
+import { BsEye } from 'react-icons/bs';
 
 const Register = () => {
     const { signInWithUser, googleLogin, errorMessage, setErrorMessage } = useContext(UseContext);
-    
+    const location = useLocation()
     const navigate = useNavigate();
+    const from = location.state?.from?.pathname || "/";
+    const [showPassword, setShowPassword] = useState(false);
     const {
         register,
         handleSubmit,
@@ -25,11 +29,14 @@ const Register = () => {
             });
 
             if (user) {
-                navigate('/'); // Redirect after successful registration
+                navigate(from || '/'); // Redirect after successful registration
             }
-           
+
         } catch (error) {
-            setErrorMessage(error.message);
+            if (error) {
+                const err = <><p>email already use</p></>
+                setErrorMessage(err);
+            }
         }
     };
 
@@ -41,7 +48,10 @@ const Register = () => {
                 navigate('/'); // Redirect after successful Google login
             }
         } catch (error) {
-           setErrorMessage(error.message);
+            if (error) {
+                const err = <><p>email already use</p></>
+                setErrorMessage(err);
+            }
         }
     };
 
@@ -65,7 +75,7 @@ const Register = () => {
                                 <input
                                     type="text"
                                     {...register("name", { required: "Name is required" })}
-                                    className="input lmd:w-sm border-amber-600"
+                                    className="input md:w-full outline-0 border-amber-600"
                                     placeholder="Your Name"
                                 />
                                 {errors.name && (
@@ -78,25 +88,38 @@ const Register = () => {
                                 <label className="label">Email</label>
                                 <input
                                     type="email"
-                                    {...register("email", { required: "Email is required" })}
-                                    className="input md:w-sm border-amber-600"
+                                    {...register("email", {
+                                        required: "Email is required",
+                                    })}
+                                    className="input w-full border outline-0 border-amber-600"
                                     placeholder="Email"
                                 />
-
-                                {/* Password */}
+                                {errors.email && (
+                                    <p className="text-red-500 text-sm">{errors.email.message}</p>
+                                )}
+                                {/* password */}
                                 <label className="label">Password</label>
-                                <input
-                                    type="password"
-                                    {...register("password", {
-                                        required: "Password is required",
-                                        minLength: {
-                                            value: 6,
-                                            message: "Minimum 6 characters"
-                                        }
-                                    })}
-                                    className="input lg:w-sm border-amber-600"
-                                    placeholder="Password"
-                                />
+
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        {...register("password", {
+                                            required: "Password is required",
+                                            minLength: 6
+                                        })}
+                                        className="input w-full border outline-0 border-amber-600 pr-10"
+                                        placeholder="Password"
+                                    />
+
+                                    {/* Show / Hide Icon */}
+                                    <span
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
+                                    >
+                                        {showPassword ? <FiEyeOff size={20} /> : <BsEye size={20} />}
+                                    </span>
+                                </div>
+
                                 {errors.password && (
                                     <p className="text-red-500 text-sm">
                                         {errors.password.message}

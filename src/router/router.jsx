@@ -10,6 +10,9 @@ import PrivateRoute from '../Private/PrivateRoute';
 import DashBoard from '../Layout/DashBoard/DashBoard';
 import ProductAdd from '../Layout/ProductAdd/ProductAdd';
 import OrderDetails from '../Layout/DashBoard/OrderDetails';
+import ViewProfile from '../Layout/ViewProfile/ViewProfile';
+import CustomarOrder from '../Layout/ViewProfile/CustomarOrder';
+import Setting from '../Layout/ViewProfile/Setting';
 
 
 
@@ -57,13 +60,28 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element:<OrderDetails></OrderDetails>
+                element: <OrderDetails></OrderDetails>
             },
             {
                 path: '/dashboard/addProduct',
                 Component: ProductAdd
             }
         ]
+    },
+    {
+        path: 'profile',
+        Component: ViewProfile,
+        children: [
+            {
+                path: '/profile',
+                Component: CustomarOrder
+            },
+            {
+                path:'/profile/setting',
+                Component:Setting
+            }
+        ]
+
     }
 ]);
 export default router

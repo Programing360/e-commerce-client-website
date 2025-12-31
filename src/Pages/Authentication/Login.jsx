@@ -1,26 +1,33 @@
-import React, { use } from 'react';
-import { Link, useNavigate } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, replace, useLocation, useNavigate } from 'react-router';
 import { UseContext } from '../../Context/UseContext';
 import { useForm } from 'react-hook-form';
+import { FiEyeOff } from 'react-icons/fi';
+import { BsEye } from 'react-icons/bs';
 
 const Login = () => {
 
     const { loginWithUser, googleLogin, errorMessage, setErrorMessage } = use(UseContext);
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-
-    
+    const location = useLocation();
+    const from = location.state?.from || "/";
+    console.log(from)
     const onSubmit = data => {
         loginWithUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 if (user) {
-                    navigate('/');
+                    navigate(from, { replace: true });
                 }
 
             })
             .catch(error => {
-                setErrorMessage(error.message);
+                if (error) {
+                    const err = <><p>email already use</p></>
+                    setErrorMessage(err);
+                }
             });
 
     };
@@ -28,11 +35,14 @@ const Login = () => {
         try {
             const result = await googleLogin();
             if (result.user) {
-                // console.log("Google login successful:", result.user);
-                navigate('/'); // Redirect after successful Google login
+
+                navigate(from, { replace: true }); // Redirect after successful Google login
             }
         } catch (error) {
-            setErrorMessage(error.message);
+            if (error) {
+                const err = <><p>email already use</p></>
+                setErrorMessage(err);
+            }
         }
     };
 
@@ -57,7 +67,27 @@ const Login = () => {
                                 )}
 
                                 <label className="label">Password</label>
-                                <input type="password" {...register("password", { required: "Password is required" })} className="input md:w-sm outline-0 border-amber-600" placeholder="Password" />
+
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        {...register("password", {
+                                            required: "Password is required",
+                                            minLength: 6
+                                        })}
+                                        className="input w-full border outline-0 border-amber-600 pr-10"
+                                        placeholder="Password"
+                                    />
+
+                                    {/* Show / Hide Icon */}
+                                    <span
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
+                                    >
+                                        {showPassword ? <FiEyeOff size={20} /> : <BsEye size={20} />}
+                                    </span>
+                                </div>
+
                                 {errors.password && (
                                     <p className="text-red-500 text-sm">
                                         {errors.password.message}

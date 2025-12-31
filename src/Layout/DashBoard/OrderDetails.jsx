@@ -17,7 +17,7 @@ const OrderDetails = () => {
 
     return (
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto w-full">
             <table className="table table-xs text-start">
                 <thead>
                     <tr>
@@ -26,13 +26,13 @@ const OrderDetails = () => {
                         <th>Email</th>
                         <th>Number</th>
                         <th>location</th>
-                        <th>location</th>
-                        <th>location</th>
-                        <th>Last Login</th>
-                        <th>Favorite Color</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                        <th>Delivery Cost</th>
+                        <th>Total Amount</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-center">
                    
                         {
                             orders.map((order, index) => {

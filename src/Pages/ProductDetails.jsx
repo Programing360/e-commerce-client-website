@@ -6,16 +6,16 @@ import AddToCard from './AddToCard';
 import { UseContext } from '../Context/UseContext';
 
 const ProductDetails = () => {
-    const { carts, setCarts } = useContext(UseContext);
+    const { carts, setCarts, user } = useContext(UseContext);
     const { images, name, price, discountPrice, description, category, _id } = useLoaderData();
     const axiosSecure = useAxiosSecure();
-   
+
 
     const notify = () => toast.success('Product added to cart 🛒');
 
     const reloadCart = async () => {
-        const res = await axiosSecure.get('/cart');
-        setCarts(res.data || []);
+        const res = await axiosSecure.get(`/cart?email=${user.email}`);
+        setCarts(res?.data || []);
     };
 
     const handleAddToCart = async (productId) => {
@@ -46,6 +46,10 @@ const ProductDetails = () => {
                 userId: productId,   // ⚠️ from auth context
                 productId,
                 quantity: 1,
+                email: user?.email,
+                images,
+                price,
+                name
             };
 
             const res = await axiosSecure.post('/cart/add', cartInfo);
@@ -155,7 +159,7 @@ const ProductDetails = () => {
 
                 </div>
             </div>
-            
+
         </div>
     );
 };

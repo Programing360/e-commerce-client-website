@@ -7,12 +7,13 @@ import { UseContext } from '../../Context/UseContext';
 import SearchBar from '../../Pages/SearchBar';
 import loginIcon from '../../assets/loginIcon.png'
 import dashboardIcon from '../../assets/dashboardIcon.png'
+import { IoCartOutline } from 'react-icons/io5';
+import ModalBox from '../../Layout/ModalBox/ModalBox';
 
 const Navbar = () => {
 
     const { carts, allProducts, totalPrice, setTotalPrice, user, UserLogout } = useContext(UseContext)
     const [dashboardAdmin, setDashboardAdmin] = useState(false);
-    console.log(user);
 
     useEffect(() => {
         if (user?.email === "fhlimon360@gmail.com") {
@@ -45,7 +46,7 @@ const Navbar = () => {
                 // Logout successful
                 navigate('/login');
             })
-            .catch((error) => console.log(error));
+            .catch((error) => alert(error));
     }
     const dashBord = dashboardAdmin && <>
         <Link to='/dashboard' className="tooltip" data-tip="Dashboard">
@@ -54,7 +55,7 @@ const Navbar = () => {
     </>
     const users = user ? <>
         <div className="dropdown dropdown-end ">
-            <div tabIndex={0} role="button" className="btn btn-ghost bg-[#e17100] btn-circle avatar tooltip" data-tip="Dashboard">
+            <div tabIndex={0} role="button" className="btn btn-ghost  btn-circle avatar tooltip" data-tip="Dashboard">
                 <div className="w-8 rounded-full"  >
                     <img
                         alt="user profile"
@@ -67,6 +68,7 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow ">
                 <h1 className=" text-lg font-medium text-center pb-2">{user?.displayName}</h1>
                 <p className="text-center pb-4">{user?.email}</p>
+                <Link to='profile'><button className='btn btn-ghost mb-4 text-center mx-auto w-full'>Your Profile</button></Link>
                 <button onClick={handleLogout} className='text-center btn btn-ghost border border-[#e17100]'>Log Out</button>
             </ul>
         </div>
@@ -192,8 +194,8 @@ const Navbar = () => {
                                    [&::-webkit-scrollbar]:w-1.5
                                    [&::-webkit-scrollbar-track]:bg-base-200
                                    [&::-webkit-scrollbar-thumb]:bg-primary
-                                   [&::-webkit-scrollbar-thumb]:rounded-full
-                                ">
+                                   [&::-webkit-scrollbar-thumb]:rounded-full">
+
                                         <AddToCard />
                                     </div>
 
@@ -204,9 +206,40 @@ const Navbar = () => {
                                         </div>
 
                                         <div className='pt-20 space-y-3 pb-4'>
-                                            <button className='btn rounded-2xl bg-[#f1d301] w-full'>Pay Online</button>
-                                            <button className='btn rounded-2xl bg-[#fc8934] w-full'>Check Out</button>
+                                            <button
+                                                className='btn rounded-2xl bg-[#fc8934] w-full'
+                                                onClick={() => document.getElementById('cashModal').showModal()}
+                                            >
+                                                <IoCartOutline />
+                                                ক্যাশ অন ডেলিভারিতে অর্ডার করুন
+                                            </button>
                                         </div>
+
+                                        {/* Scrollable modal */}
+                                        {/* <dialog id="cashModal" className="modal">
+                                            <div className="modal-box max-w-md p-0">
+
+                                               
+                                                <div className="flex justify-between items-center px-5 py-4 border-b">
+                                                    <h3 className="font-bold text-lg text-center mx-auto">
+                                                        ক্যাশ অন ডেলিভারিতে <br /> অর্ডার করতে আপনার তথ্য দিন
+                                                    </h3>
+                                                    <button
+                                                        className="btn btn-sm btn-circle btn-ghost"
+                                                        onClick={() => document.getElementById("cashModal").close()}
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                </div>
+
+                                                
+
+                                            </div>
+                                        </dialog> */}
+
+                                        <ModalBox></ModalBox>
+
+
 
                                         <Link to='/ShoppingCart'>
                                             <u className='cursor-pointer'>View Cart</u>

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import useAxiosSecure from '../Hook/useAxiosSecure';
 import CartDetails from './CartDetails';
 import { UseContext } from '../Context/UseContext';
 
 const AddToCard = () => {
-  const { carts, setCarts, allProducts, setAllProducts, increase, decrease } = useContext(UseContext)
+  const { carts, setCarts, allProducts, setAllProducts, increase, decrease, user } = useContext(UseContext)
 
   const axiosSecure = useAxiosSecure();
   // Load products
@@ -16,10 +16,10 @@ const AddToCard = () => {
 
   // Load cart
   useEffect(() => {
-    axiosSecure.get("/cart").then(res => {
+    axiosSecure.get(`/cart?email=${user?.email}`).then(res => {
       setCarts(res?.data || []);
     });
-  }, [axiosSecure, setCarts])
+  }, [axiosSecure, setCarts, user])
 
   const cartItems = carts.map(cart => {
     const product = allProducts.find(
@@ -31,7 +31,7 @@ const AddToCard = () => {
       product
     };
   });
-
+  
   // 🔴 REMOVE HANDLER (Perfect)
   const handleRemove = async (cartId) => {
 
@@ -42,7 +42,7 @@ const AddToCard = () => {
         setCarts(prev => prev.filter(item => item._id !== cartId));
       }
     } catch (err) {
-      console.error(err);
+      alert(err);
     }
   };
 

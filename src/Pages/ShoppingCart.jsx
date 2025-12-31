@@ -41,7 +41,7 @@ const ShoppingCart = () => {
                 setCarts(updated);
             }
         } catch (err) {
-            console.error(err);
+            alert(err);
         }
     };
     // HELPER FUNCTIONS
@@ -58,7 +58,8 @@ const ShoppingCart = () => {
             cartId: cart.userId   // ✅ IMPORTANT
         };
     });
-    console.log(cartProducts);
+
+    
     return (
         <div>
             <div className='bg-[#fe8838] py-4'>

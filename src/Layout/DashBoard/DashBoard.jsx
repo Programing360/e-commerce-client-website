@@ -6,7 +6,7 @@ import cartIcon from '../../assets/OrderCart.png'
 const DashBoard = () => {
 
     const location = useLocation()
-    console.log(location)
+    
     const title = location.pathname === '/dashboard/addproduct' ? <div className="px-4">Dashboard {'>'} Product Add</div> : <div className="px-4">Dashboard {'>'} Order List</div>
     return (
         <div className="drawer lg:drawer-open">

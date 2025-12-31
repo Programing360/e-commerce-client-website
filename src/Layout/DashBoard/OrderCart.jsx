@@ -12,20 +12,25 @@ const OrderCart = ({ orders, index }) => {
     const {
         firstName,
         lastName,
+        name,
         email,
         phone,
         city,
-        country
+        country,
+        address
     } = customer;
     return (
         <tr>
             <th>{index + 1}</th>
             <td className="font-medium">
-                {firstName}{lastName}
+                {firstName}{lastName}{name}
             </td>
-            <td className='text-start'>{email}</td>
+            <td className=''>{email}</td>
             <td>{phone}</td>
-            <td>{city}, {country}</td>
+            {
+                address ? <td>{address}</td> : <td>{city},{country}</td>
+            }
+            
             <td>{items.length}</td>
             <td>৳{subtotal}</td>
             <td>৳{shippingCost}</td>

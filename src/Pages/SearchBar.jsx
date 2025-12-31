@@ -6,7 +6,7 @@ import loginImg from '../assets/account_circle_24dp_5F6368_FILL0_wght400_GRAD0_o
 import AddToCard from './AddToCard';
 
 const SearchBar = () => {
-    const { allProducts,totalPrice,carts } = useContext(UseContext);
+    const { allProducts,totalPrice,carts,user } = useContext(UseContext);
 
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
@@ -84,11 +84,14 @@ const SearchBar = () => {
                                 />
                             </label>
                             <div className='flex'>
-                                <Link to='/login'>
+                                {
+                                    user ? '' :<Link to='/login'>
                                     <button className="btn btn-ghost btn-circle">
                                         <img src={loginImg} alt="" />
                                     </button>
                                 </Link>
+                                }
+                                
 
                                 <div className="drawer drawer-end bg-[#ffffff]">
                                     <input id="my-drawer-6" type="checkbox" className="drawer-toggle" />
