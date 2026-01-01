@@ -31,7 +31,7 @@ const CustomerOrder = () => {
     }, [user]);
 
     if (loading) {
-        return <p className="text-center">Loading...</p>;
+        return <p className="text-center position-absolute bottom-50 end-50">Loading...</p>;
     }
 
     return (

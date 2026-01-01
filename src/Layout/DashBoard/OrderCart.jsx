@@ -30,7 +30,6 @@ const OrderCart = ({ orders, index }) => {
             {
                 address ? <td>{address}</td> : <td>{city},{country}</td>
             }
-            
             <td>{items.length}</td>
             <td>৳{subtotal}</td>
             <td>৳{shippingCost}</td>

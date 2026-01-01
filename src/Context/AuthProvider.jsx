@@ -73,6 +73,8 @@ const AuthProvider = ({ children }) => {
         await axiosSecure.patch(`/cart/decrease/${cartId}`);
     };  
 
+    
+
     const dataInfo = {
         amount,
         setAmount,

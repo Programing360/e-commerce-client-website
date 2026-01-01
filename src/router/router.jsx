@@ -13,6 +13,10 @@ import OrderDetails from '../Layout/DashBoard/OrderDetails';
 import ViewProfile from '../Layout/ViewProfile/ViewProfile';
 import CustomarOrder from '../Layout/ViewProfile/CustomarOrder';
 import Setting from '../Layout/ViewProfile/Setting';
+import Collection from '../Pages/Collection/Collection';
+import CategoryProducts from '../Pages/Collection/CategoryProducts';
+
+
 
 
 
@@ -51,7 +55,8 @@ const router = createBrowserRouter([
             }
 
 
-        ]
+        ],
+
 
     },
     {
@@ -77,11 +82,23 @@ const router = createBrowserRouter([
                 Component: CustomarOrder
             },
             {
-                path:'/profile/setting',
-                Component:Setting
+                path: '/profile/setting',
+                Component: Setting
+            }
+        ]
+
+    },
+    {
+        path: '/category',
+        Component: Collection,
+        children:[
+            {
+                path:':categoryName',
+                Component:CategoryProducts
             }
         ]
 
     }
+
 ]);
 export default router

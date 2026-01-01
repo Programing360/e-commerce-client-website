@@ -25,7 +25,7 @@ const menuItems = (
 );
 const ItemNavbar = () => {
     return (
-        <div className="navbar  fixed top-24 z-50 bg-gray-400">
+        <div className="navbar fixed z-50 bg-gray-400">
             <div className="max-w-7xl mx-auto w-full px-4">
                 {/* Desktop Menu */}
                 <div className="navbar-center hidden lg:flex">

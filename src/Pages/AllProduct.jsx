@@ -23,39 +23,7 @@ const AllProduct = () => {
     return (
         <div className='mt-10'>
             <h1 className="text-3xl font-bold text-center">All Product</h1>
-            {/* Scrollable modal */}
-            <dialog id="cashModal" className="modal">
-                <div className="modal-box max-w-lg max-h-[80vh] overflow-y-auto">
-                    <h3 className="font-bold text-lg mb-4">
-                        Cash on Delivery
-                    </h3>
-
-                    {/* Modal Content */}
-                    <p className="mb-4">
-                        আপনার অর্ডার কনফার্ম করতে নিচের তথ্য যাচাই করুন।
-                    </p>
-
-                    {/* Example content */}
-                    <div className="space-y-2">
-                        <p>✔ Address: Dhaka</p>
-                        <p>✔ Phone: 88017xxxxxxx</p>
-                        <p>✔ Total Amount: ৳2760</p>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="modal-action">
-                        <button className="btn btn-outline" onClick={() => document.getElementById('cashModal').close()}>
-                            Cancel
-                        </button>
-                        <Link to="/order">
-                            <button className="btn bg-[#fc8934] text-white">
-                                Confirm Order
-                            </button>
-                        </Link>
-                    </div>
-                </div>
-            </dialog>
-
+            
             <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 container mx-auto mt-12 px-2'>
                 {
                     allProducts.map((product, index) => (

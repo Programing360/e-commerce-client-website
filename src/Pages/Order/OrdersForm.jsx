@@ -34,9 +34,9 @@ const OrderForm = () => {
     );
 
     const orderData = {
+      
       customer: {
-        firstName: data.firstName,
-        lastName: data.lastName,
+        name: (data.firstName)(data.lastName ),
         email: data.email,
         phone: data.phone,
         country: data.country,

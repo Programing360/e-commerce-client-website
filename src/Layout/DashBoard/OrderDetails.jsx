@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import OrderCart from "./OrderCart";
-import { useLocation } from "react-router";
-
 
 
 const OrderDetails = () => {
     const [orders, setOrders] = useState([])
     const axiosSecure = useAxiosSecure()
-    const location = useLocation()
-    console.log(location)
+
     useEffect(() => {
         axiosSecure.get('/orderDetails')
             .then(res => setOrders(res.data))

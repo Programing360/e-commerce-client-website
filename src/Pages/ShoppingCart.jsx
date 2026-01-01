@@ -15,8 +15,7 @@ const ShoppingCart = () => {
     } = useContext(UseContext);
 
     const axiosSecure = useAxiosSecure();
-
-    console.log(carts);
+    
     const cartItems = carts.map(cart => {
         const product = allProducts.find(
             p => p._id === cart.productId
@@ -59,7 +58,7 @@ const ShoppingCart = () => {
         };
     });
 
-    
+
     return (
         <div>
             <div className='bg-[#fe8838] py-4'>
