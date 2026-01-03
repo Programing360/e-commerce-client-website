@@ -13,7 +13,6 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from || "/";
-    console.log(from)
     const onSubmit = data => {
         loginWithUser(data.email, data.password)
             .then(result => {

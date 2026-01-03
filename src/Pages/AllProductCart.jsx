@@ -64,11 +64,7 @@ const AllProductCart = ({ product }) => {
   };
 
   return (
-    <div
-      data-aos="fade-up"
-      
-      className="card bg-base-100 shadow-sm"
-    >
+    <div data-aos="fade-up" className="card bg-base-100 shadow-sm">
       <Link to={`/productDetails/${_id}`}>
         <figure className="px-6 pt-6 h-40 flex items-center justify-center">
           <img src={images} alt={name} className="h-full object-contain" />
@@ -88,15 +84,17 @@ const AllProductCart = ({ product }) => {
 
         <div className="card-actions justify-center">
           <Link to="/order">
-            <button className="btn bg-[#e17100] text-white">Order Now</button>
+            <button className="btn shadow-gray-500 shadow  bg-[#e17100] text-white">Order Now</button>
           </Link>
 
-          <button
-            onClick={() => handleAddToCart(_id)}
-            className="btn bg-[#e17100] text-white"
-          >
-            Quick Add
-          </button>
+          <div className="shadow-gray-500 shadow rounded-lg">
+            <button
+              onClick={() => handleAddToCart(_id)}
+              className="btn bg-[#727e40] text-white"
+            >
+              Quick Add
+            </button>
+          </div>
         </div>
       </div>
     </div>
