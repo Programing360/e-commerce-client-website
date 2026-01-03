@@ -50,7 +50,7 @@ const Navbar = () => {
   const dashboard = dashboardAdmin && (
     <>
       <Link to="/dashboard" className="tooltip" data-tip="Dashboard">
-        <img className="w-8 h-8" src={dashboardIcon} alt="" />
+        <img className="dash " src={dashboardIcon} alt="" />
       </Link>
     </>
   );
@@ -236,7 +236,7 @@ const Navbar = () => {
                               data-tip="Dashboard"
                             >
                               <img
-                                className="w-8 mb-3"
+                                className="w-8 mb-3 "
                                 src={dashboardIcon}
                                 alt="This is Dashboard icon. inside the icon has Customer Order"
                               />
@@ -263,7 +263,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="hidden lg:block pl-4">{dashboard}</div>
+          <div className="hidden lg:block pl-4 w-12">{dashboard}</div>
         </div>
 
         {/* Left - Logo */}
@@ -274,20 +274,20 @@ const Navbar = () => {
           </NavLink>
         </div>
 
-        <div className="flex items-center md:justify-end md:navbar-end">
+        <div className="flex items-center md:justify-end navbar-end">
           {/* search */}
           <div className="tooltip" data-tip="Search">
             <SearchBar></SearchBar>
           </div>
 
           <div>
-            <div className="drawer drawer-end mt-2 bg-[#ffffff]">
+            <div className="drawer drawer-end md:mt-2 bg-[#ffffff]">
               <input
                 id="my-drawer-5"
                 type="checkbox"
                 className="drawer-toggle"
               />
-              <div className="drawer-content flex items-center mr-10">
+              <div className="drawer-content flex items-center md:mr-10">
                 <label
                   htmlFor="my-drawer-5"
                   className="drawer-button  cursor-pointer tooltip"

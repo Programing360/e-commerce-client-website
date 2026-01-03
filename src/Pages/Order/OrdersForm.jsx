@@ -244,8 +244,7 @@ const OrderForm = () => {
             <button className="btn bg-linear-to-r via-amber-400 from-fuchsia-400 w-full rounded-xl text-white">
               Place Order
             </button>
-
-            <ToastContainer />
+              
           </div>
         </div>
       </form>

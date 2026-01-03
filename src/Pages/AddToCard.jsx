@@ -5,7 +5,7 @@ import { UseContext } from '../Context/UseContext';
 
 const AddToCard = () => {
   const { carts, setCarts, allProducts, setAllProducts, increase, decrease, user } = useContext(UseContext)
-
+  // console.log(carts)
   const axiosSecure = useAxiosSecure();
   // Load products
   useEffect(() => {
@@ -21,7 +21,7 @@ const AddToCard = () => {
     });
   }, [axiosSecure, setCarts, user])
 
-  const cartItems = carts.map(cart => {
+  const cartItems = carts?.map(cart => {
     const product = allProducts.find(
       p => p._id === cart.productId
     );
