@@ -71,7 +71,7 @@ const ModalBox = () => {
     try {
       await axiosSecure.post("/orders", orderData);
       //   reset();
-      document.getElementById("cashModal").close();
+      
       toast("আপনার অর্ডার সফল হয়েছে 🎉", {
         position: "top-center",
         autoClose: 5000,
@@ -83,6 +83,7 @@ const ModalBox = () => {
         theme: "light",
         transition: Bounce,
       });
+      document.getElementById("cashModal").close();
     } catch (err) {
       if (err) {
         toast("আপনার অর্ডার সম্পূন্ন হয়নি", {

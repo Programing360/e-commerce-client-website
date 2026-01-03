@@ -56,12 +56,12 @@ const Navbar = () => {
   );
   const users = user ? (
     <>
-      <div className="dropdown dropdown-end ">
+      <div className="dropdown dropdown-end">
         <div
           tabIndex={0}
           role="button"
           className="btn btn-ghost  btn-circle avatar tooltip"
-          data-tip="Dashboard"
+          data-tip="Profile"
         >
           <div className="w-8 rounded-full">
             <img alt="user profile" src={user?.photoURL || loginIcon} />
@@ -103,15 +103,10 @@ const Navbar = () => {
     "relative font-medium text-gray-700 hover:text-primary transition " +
     "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 " +
     "after:bg-primary after:transition-all after:duration-300 " +
-    "hover:after:w-full w-full text-[16px] text-[#2b2b2b]";
+    "hover:after:w-full text-[#2b2b2b]";
 
   const menuItems = (
     <>
-      <li>
-        <NavLink to="/category/Zone" className={navClass}>
-          OFFER ZONE
-        </NavLink>
-      </li>
       <li>
         <NavLink to="/category/Seller" className={navClass}>
           Best Seller
@@ -176,8 +171,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className="overflow-x-hidden">
-      <div className="bg-amber-600 text-center text-white py-2">
+    <div className="">
+      <div className="bg-amber-600 text-center md:w-auto text-white py-2">
         <p className="">
           আমাদের যে কোন পণ্য অর্ডার করতে কল বা WhatsApp করুন: +8801321208940 |
           হট লাইন: 09642-922922
@@ -199,23 +194,7 @@ const Navbar = () => {
                   htmlFor="my-drawer-1"
                   className=" drawer-button"
                 >
-                  {open ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  ) : (
-                    <svg
+                  <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-6 w-6"
                       fill="none"
@@ -229,19 +208,57 @@ const Navbar = () => {
                         d="M4 6h16M4 12h16M4 18h16"
                       />
                     </svg>
-                  )}
                 </label>
               </div>
-              <div className="drawer-side mt-38">
+              <div className="drawer-side">
                 <label
                   htmlFor="my-drawer-1"
                   aria-label="close sidebar"
                   className="drawer-overlay"
                 ></label>
-                <ul className="menu bg-[#ffffff] min-h-full w-80 p-4">
-                  {/* Sidebar content here */}
+
+                <ul className="menu bg-white min-h-screen w-64 sm:w-72 md:w-80 p-4 overflow-y-auto">
                   {menuItems}
-                  <div className="block md:hidden mt-10">{users}</div>
+                  <div className="mt-20">
+                    {user ? (
+                      <div className="">
+                        <h1>My Account</h1>
+                        <div className="flex flex-col gap-2">
+                          <Link to="/profile">
+                            <button className="btn btn-ghost btn-circle">
+                              <img src={loginImg} alt="" />
+                            </button>
+                          </Link>
+                          {dashboardAdmin && (
+                            <Link
+                              to="/dashboard"
+                              className="tooltip"
+                              data-tip="Dashboard"
+                            >
+                              <img
+                                className="w-8 mb-3"
+                                src={dashboardIcon}
+                                alt="This is Dashboard icon. inside the icon has Customer Order"
+                              />
+                            </Link>
+                          )}
+                          <button
+                            onClick={handleLogout}
+                            className="text-center btn btn-ghost border border-[#e17100]"
+                          >
+                            Log Out
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <Link to="/login">
+                        <button className="btn btn-ghost btn-circle">
+                          <img src={loginImg} alt="" />
+                        </button>
+                      </Link>
+                    )}
+                  </div>
+                  {/* <div className="block md:hidden mt-10">{users}</div> */}
                 </ul>
               </div>
             </div>
@@ -252,12 +269,12 @@ const Navbar = () => {
         {/* Left - Logo */}
 
         <div className="navbar-center">
-          <NavLink to="/" className="text-xl font-bold text-primary ">
-            E-Shop
+          <NavLink to="/" className="md:text-xl font-bold text-primary ">
+            PCT-Shop
           </NavLink>
         </div>
 
-        <div className="flex items-center md:justify-end lg:gap-4 md:navbar-end">
+        <div className="flex items-center md:justify-end md:navbar-end">
           {/* search */}
           <div className="tooltip" data-tip="Search">
             <SearchBar></SearchBar>
@@ -270,7 +287,7 @@ const Navbar = () => {
                 type="checkbox"
                 className="drawer-toggle"
               />
-              <div className="drawer-content w-20">
+              <div className="drawer-content flex items-center mr-10">
                 <label
                   htmlFor="my-drawer-5"
                   className="drawer-button  cursor-pointer tooltip"
@@ -341,17 +358,18 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-
-          {/* login */}
-          <div className="hidden md:block">{users}</div>
+          <div>
+            {/* login */}
+            <div className="hidden md:block mr-5">{users}</div>
+          </div>
         </div>
       </div>
 
-      <div className="navbar top-0  bg-gray-400 hidden lg:block pt-4">
-        <div className="max-w-7xl mx-auto w-full px-4">
+      <div className="navbar top-0 w-full  bg-gray-400 hidden lg:block pt-4">
+        <div className="flex flex-row justify-center px-4">
           {/* Desktop Menu */}
-          <div className="navbar-center hidden lg:flex">
-            <ul className="flex gap-8 ">{menuItems}</ul>
+          <div className="navbar-center flex-wrap none lg:block">
+            <ul className="flex flex-wrap gap-4">{menuItems}</ul>
           </div>
 
           {/* Mobile Menu */}

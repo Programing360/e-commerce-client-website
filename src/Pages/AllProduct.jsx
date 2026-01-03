@@ -1,74 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import AxiosSecure from '../Hook/AxiosSecure';
-import { Link } from 'react-router';
-import { UseContext } from '../Context/UseContext';
+import React, { useEffect, useState } from "react";
+import AxiosSecure from "../Hook/AxiosSecure";
+import { Link } from "react-router";
+import { UseContext } from "../Context/UseContext";
+import AllProductCart from "./AllProductCart";
 
 const AllProduct = () => {
-    const [allProducts, setAllProducts] = useState([])
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    AxiosSecure().then((res) => {
+      if (!res.data) {
+        <p>Loading....</p>;
+      } else if (res.data) {
+        setAllProducts(res?.data);
+      }
+    });
+  }, []);
 
 
-    useEffect(() => {
-        AxiosSecure().then(res => {
 
-            if (!res.data) {
-                <p>Loading....</p>
-            }
+  return (
+    <div className="mt-10">
+      <h1 className="text-3xl font-bold text-center">All Product</h1>
 
-            else if (res.data) {
-                setAllProducts(res.data)
-            }
-        })
-
-    }, [])
-    return (
-        <div className='mt-10'>
-            <h1 className="text-3xl font-bold text-center">All Product</h1>
-            
-            <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 container mx-auto mt-12 px-2'>
-                {
-                    allProducts.map((product, index) => (
-                        <Link key={index} to={`/productDetails/${product._id}`}>
-
-                            <div className="card bg-base-100 shadow-sm">
-
-                                <figure className="px-6 pt-6 h-40 flex items-center justify-center">
-                                    <img
-                                        src={product.images}
-                                        alt={product.name}
-                                        className="rounded-xl h-full object-contain"
-                                    />
-                                </figure>
-
-                                <div className="card-body text-center">
-                                    {/* Title */}
-                                    <h2 className="card-title justify-center line-clamp-1">
-                                        {product.name}
-                                    </h2>
-
-                                    <p className='bg-amber-500 w-24 text-center mx-auto rounded-4xl text-white'>{product.category}</p>
-
-                                    {/* Price */}
-                                    <p className="text-lg font-bold text-[#e17100]">
-                                        TK {product.price}.00
-                                    </p>
-
-                                    <div className="card-actions justify-center mx-auto">
-                                        <Link to='/order'>
-                                            <button className="btn bg-[#e17100] text-[#ffffff]">Order Now</button>
-                                        </Link>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </Link>
-
-                    ))
-                }
-            </div>
-        </div>
-
-    );
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 container mx-auto mt-12 px-2">
+        {allProducts.map((product, index) => <AllProductCart key={index} product={product}></AllProductCart> )}
+      </div>
+    </div>
+  );
 };
 
 export default AllProduct;

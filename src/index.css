@@ -1,9 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Stack+Sans+Text:wght@200..700&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
 /* @plugin "daisyui"; */
 
-
 @plugin "daisyui" {
-  themes: light --default, dark
+  themes: light --default, dark;
 }
 
 @plugin "daisyui/theme" {
@@ -11,4 +11,20 @@
   default: true;
   --color-primary: blue;
   --color-secondary: teal;
+}
+
+.urbanest-text {
+  font-family: "Stack Sans Text", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400px;
+  font-style: normal;
+}
+
+body{
+  width: 100%;
+}
+.product{
+  width: 50vw;
+  margin: auto;
+  margin-top: 20px;
 }
