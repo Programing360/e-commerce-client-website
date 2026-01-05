@@ -9,8 +9,11 @@ import homeIcon from "../../assets/Home.png";
 import { Link, Outlet, useNavigate } from "react-router";
 import { use } from "react";
 import { UseContext } from "../../Context/UseContext";
+import UseCart from "../../Hook/UseCart";
 const ViewProfile = () => {
   const { user, UserLogout } = use(UseContext);
+  const [cart] = UseCart();
+
   const navigate = useNavigate();
   const userLogOut = () => {
     UserLogout();
@@ -67,7 +70,15 @@ const ViewProfile = () => {
 
           {/* Right: Desktop Icons */}
           <div className="hidden md:flex items-center gap-4 text-xl">
-            <FaShoppingCart className="cursor-pointer" />
+            <Link to='/ShoppingCart'>
+              <button className="btn">
+                <FaShoppingCart className="cursor-pointer" />
+                <div className="badge badge-sm badge-secondary">
+                  +{cart.length}
+                </div>
+              </button>
+            </Link>
+
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="cursor-pointer">
                 <FaUserCircle className="text-2xl" />
@@ -124,11 +135,6 @@ const ViewProfile = () => {
                 <FaShopify /> Shop
               </li>
             </Link>
-            {/* <Link to='/'>
-                            <button className="block md:hidden text-15 p-2 rounded-lg hover:bg-gray-100 mt-2">
-                               
-                                Shop</button>
-                        </Link> */}
           </div>
           <Link to="/profile">
             <li className="flex items-center gap-2">

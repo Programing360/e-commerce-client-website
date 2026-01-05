@@ -1,4 +1,3 @@
-
 import useAxiosSecure from "../Hook/useAxiosSecure";
 import { Link } from "react-router";
 import UseCart from "../Hook/UseCart";
@@ -6,13 +5,22 @@ import UseAllProduct from "../Hook/UseAllProducts";
 import CartUpdate from "../Hook/CartUpdate";
 
 const ShoppingCart = () => {
-  const [cart] = UseCart();
+  const [cart, refetch] = UseCart();
   const [allProducts] = UseAllProduct();
-  const {increaseCart,decreaseCart, isloading} = CartUpdate() 
+  const { increaseCart, decreaseCart, isloading } = CartUpdate();
   const axiosSecure = useAxiosSecure();
-  
+
   // 🔴 REMOVE HANDLER (Perfect)
-     const totalPrice = cart.reduce((prePrice, newPrice) => prePrice + newPrice.price, 0)
+  const totalPrice = cart.reduce(
+    (prePrice, newPrice) => prePrice + newPrice.price,
+    0
+  );
+  const id = cart.map((cartId) => {
+    return cartId._id;
+  })
+
+  console.log(id[0])
+
   const handleRemove = async (cartId) => {
     // console.log(cartId)
     try {
@@ -20,14 +28,13 @@ const ShoppingCart = () => {
       if (data.deletedCount === 1) {
         // ✅ instant UI update
         cart.filter((item) => item._id !== cartId);
+        refetch()
       }
     } catch (err) {
       alert(err);
     }
   };
-  const id = cart.map(cartId => {
-    return cartId._id
-  })
+
   // MERGED CART DATA
   const cartProducts = cart.map((cart) => {
     const product = allProducts.find((p) => p._id === cart.productId);
@@ -38,7 +45,7 @@ const ShoppingCart = () => {
     };
   });
 
-//   console.log(cartProducts,cart, id);
+  //   console.log(cartProducts,cart, id);
   return (
     <div>
       <div className="bg-[#fe8838] py-4">
@@ -81,7 +88,7 @@ const ShoppingCart = () => {
               <div>
                 <h4 className="font-medium w-full">{item.name}</h4>
                 <button
-                  onClick={() => handleRemove(id._id)}
+                  onClick={() => handleRemove(id[0])}
                   className="text-sm text-red-500 hover:underline"
                 >
                   Remove

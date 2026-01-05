@@ -30,7 +30,7 @@ const Navbar = () => {
   const totalPrice = cart.reduce(
     (prePrice, newPrice) => prePrice + newPrice.price,
     0
-  );
+  );        
   const handleLogout = () => {
     UserLogout()
       .then(() => {
@@ -166,8 +166,7 @@ const Navbar = () => {
     <div className="">
       <div className="bg-amber-600 text-center md:w-auto text-white py-2">
         <p className="">
-          আমাদের যে কোন পণ্য অর্ডার করতে কল বা WhatsApp করুন: +8801321208940 |
-          হট লাইন: 09642-922922
+          আমাদের যে কোন পণ্য অর্ডার করতে কল বা WhatsApp করুন: +8801754318654 || +8801641616910
         </p>
       </div>
       <div className="navbar shadow bg-[#ffffff]">
@@ -268,7 +267,7 @@ const Navbar = () => {
 
         <div className="flex items-center md:justify-end navbar-end">
           {/* search */}
-          <div className="tooltip" data-tip="Search">
+          <div className="tooltip mr-8" data-tip="Search">
             <SearchBar></SearchBar>
           </div>
 
@@ -343,7 +342,11 @@ const Navbar = () => {
                     <ModalBox></ModalBox>
 
                     <Link to="/ShoppingCart">
-                      <u className="cursor-pointer">View Cart</u>
+                      <u
+                      onClick={() => {
+                        document.getElementById('my-drawer-5').checked = false;
+                      }}
+                      className="cursor-pointer">View Cart</u>
                     </Link>
                   </div>
                 </div>

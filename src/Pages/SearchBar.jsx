@@ -38,7 +38,7 @@ const SearchBar = () => {
       <input id="top-drawer" type="checkbox" className="peer hidden" />
 
       {/* SEARCH BUTTON */}
-      <label htmlFor="top-drawer" className="btn btn-ghost btn-circle">
+      <label htmlFor="top-drawer" className="btn btn-ghost hover:bg-amber-500 lg:w-xl flex justify-end pr-4 hover:text-[#ffffff] border border-amber-500 rounded-full btn-circle">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -81,7 +81,7 @@ const SearchBar = () => {
                             input input-bordered
                             border-[#e17100]
                             rounded-full
-                            flex items-center gap-2"
+                            flex items-center gap-2 outline-0"
               >
                 <svg
                   className="h-5 opacity-50"
@@ -106,7 +106,7 @@ const SearchBar = () => {
                 <input
                   type="search"
                   placeholder="Search products..."
-                  className="w-full"
+                  className="w-full "
                   value={query}
                   onChange={(e) => handleSearch(e.target.value)}
                 />
@@ -121,19 +121,18 @@ const SearchBar = () => {
                     </button>
                   </Link>
                 )}
-                <Link>
-                  
+                <Link to='/ShoppingCart'>
+                  <div className="relative">
+                    <img
+                      src={cartImg}
+                      alt=""
+                      className="hover:bg-[#e2e2e2] p-2 rounded-full"
+                    />
+                    <span className="badge badge-sm bg-[#e17100] text-[#ffffff] indicator-item absolute -top-2 right-6 rounded-full">
+                      {cart.length}
+                    </span>
+                  </div>
                 </Link>
-                <div>
-                  <img
-                    src={cartImg}
-                    alt=""
-                    className="hover:bg-[#e2e2e2] p-2 rounded-full relative"
-                  />
-                  <span className="badge badge-sm bg-[#e17100] text-[#ffffff] indicator-item absolute top-0 left-6 rounded-full">
-                    {cart.length}
-                  </span>
-                </div>
               </div>
             </div>
 
