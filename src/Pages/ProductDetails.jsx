@@ -1,5 +1,11 @@
 import React, { useContext } from "react";
-import { Link, useLoaderData } from "react-router";
+import {
+  Link,
+  Navigate,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router";
 import useAxiosSecure from "../Hook/useAxiosSecure";
 import { toast, ToastContainer } from "react-toastify";
 import AddToCard from "./AddToCard";
@@ -8,22 +14,22 @@ import messangerIcon from "../assets/messenger-social-media-logo-icon-free-png-r
 import { BsCart3 } from "react-icons/bs";
 import { BiBox } from "react-icons/bi";
 import { motion } from "motion/react";
+import Swal from "sweetalert2";
+import UseCart from "../Hook/UseCart";
+
 const ProductDetails = () => {
-  const { carts, setCarts, user } = useContext(UseContext);
+  const { user } = useContext(UseContext);
   const { images, name, price, discountPrice, description, category, _id } =
     useLoaderData();
-  const axiosSecure = useAxiosSecure();
-
+  const [cart, refetch] = UseCart();
+  const navigate = useNavigate();
   const notify = () => toast.success("Product added to cart 🛒");
-
-  const reloadCart = async () => {
-    const res = await axiosSecure.get(`/cart?email=${user.email}`);
-    setCarts(res?.data || []);
-  };
+  const axiosSecure = useAxiosSecure();
+  const location = useLocation()
 
   const handleAddToCart = async (productId) => {
     try {
-      const existingCart = carts.find((item) => item.productId === productId);
+      const existingCart = cart?.find((item) => item.productId === productId);
       // ✅ PRODUCT ALREADY IN CART → UPDATE QTY
       if (existingCart) {
         const newQty = existingCart.quantity + 1;
@@ -33,10 +39,10 @@ const ProductDetails = () => {
           { quantity: newQty }
         );
         if (data.modifiedCount === 1) {
-          const updated = carts.map((item) =>
+          cart.map((item) =>
             item._id === existingCart._id ? { ...item, quantity: newQty } : item
           );
-          setCarts(updated);
+          refetch();
           toast.success("Product also added to cart 🛒");
         }
         return;
@@ -53,11 +59,26 @@ const ProductDetails = () => {
         name,
       };
 
-      const res = await axiosSecure.post("/cart/add", cartInfo);
-
-      if (res.data?.insertedId) {
-        notify();
-        reloadCart();
+      if (user?.email) {
+        const res = await axiosSecure.post("/cart/add", cartInfo);
+        if (res.data?.insertedId) {
+          notify();
+          refetch();
+        }
+      } else {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, login!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login", { state: { from: location } });
+          }
+        });
       }
     } catch (error) {
       if (error) {
@@ -142,8 +163,7 @@ const ProductDetails = () => {
             </div>
             <div className="collapse-content text-sm">
               <div className="space-y-2">
-                <div></div>
-                {description.split("\n").map((line, index) => (
+                {description?.split("\n").map((line, index) => (
                   <p
                     key={index}
                     className={

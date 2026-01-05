@@ -1,5 +1,5 @@
 import React, { use, useState } from 'react';
-import { Link, replace, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { UseContext } from '../../Context/UseContext';
 import { useForm } from 'react-hook-form';
 import { FiEyeOff } from 'react-icons/fi';

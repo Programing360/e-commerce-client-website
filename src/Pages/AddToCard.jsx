@@ -1,31 +1,20 @@
-import React, { useContext, useEffect } from 'react';
+
 import useAxiosSecure from '../Hook/useAxiosSecure';
 import CartDetails from './CartDetails';
-import { UseContext } from '../Context/UseContext';
+import UseCart from '../Hook/UseCart';
+import UseAllProduct from '../Hook/UseAllProducts';
+
 
 const AddToCard = () => {
-  const { carts, setCarts, allProducts, setAllProducts, increase, decrease, user } = useContext(UseContext)
-  // console.log(carts)
   const axiosSecure = useAxiosSecure();
-  // Load products
-  useEffect(() => {
-    axiosSecure.get('/allProduct')
-      .then(res => setAllProducts(res?.data || []));
-  }, [axiosSecure, setAllProducts]);
-
-
-  // Load cart
-  useEffect(() => {
-    axiosSecure.get(`/cart?email=${user?.email}`).then(res => {
-      setCarts(res?.data || []);
-    });
-  }, [axiosSecure, setCarts, user])
-
-  const cartItems = carts?.map(cart => {
+  const [cart,refetch] = UseCart()
+  const [allProducts] = UseAllProduct()
+  // console.log(cart)
+  const cartItems = cart?.map(cart => {
     const product = allProducts.find(
       p => p._id === cart.productId
     );
-
+    console.log(product)
     return {
       ...cart,
       product
@@ -34,12 +23,13 @@ const AddToCard = () => {
   
   // 🔴 REMOVE HANDLER (Perfect)
   const handleRemove = async (cartId) => {
-
+    // console.log(cartId)
     try {
       const { data } = await axiosSecure.delete(`/cart/delete/${cartId}`);
       if (data.deletedCount === 1) {
         // ✅ instant UI update
-        setCarts(prev => prev.filter(item => item._id !== cartId));
+        refetch()
+        // setCarts(prev => prev.filter(item => item._id !== cartId));
       }
     } catch (err) {
       alert(err);
@@ -54,7 +44,6 @@ const AddToCard = () => {
         const product = allProducts.find(
           p => p._id === cart.productId
         );
-
         if (!product) return null;
         return (
           <CartDetails
@@ -62,8 +51,6 @@ const AddToCard = () => {
             cart={cart}             // ✅ cart document
             product={product}       // ✅ product data
             handleRemove={handleRemove}
-            increase={increase}
-            decrease={decrease}
           />
         );
       })}

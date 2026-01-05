@@ -5,13 +5,16 @@ import cartImg from "../assets/shopping_cart_.svg";
 import loginImg from "../assets/account_circle_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.png";
 import AddToCard from "./AddToCard";
 import { IoCartOutline } from "react-icons/io5";
+import UseAllProduct from "../Hook/UseAllProducts";
+import UseCart from "../Hook/UseCart";
 
 const SearchBar = () => {
-  const { allProducts, totalPrice, carts, user } = useContext(UseContext);
+  const { user } = useContext(UseContext);
 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-
+  const [allProducts] = UseAllProduct();
+  const [cart] = UseCart();
   /* ======================
         SEARCH HANDLER
     ====================== */
@@ -118,88 +121,18 @@ const SearchBar = () => {
                     </button>
                   </Link>
                 )}
-
-                <div className="drawer drawer-end bg-[#ffffff]">
-                  <input
-                    id="my-drawer-6"
-                    type="checkbox"
-                    className="drawer-toggle"
+                <Link>
+                  
+                </Link>
+                <div>
+                  <img
+                    src={cartImg}
+                    alt=""
+                    className="hover:bg-[#e2e2e2] p-2 rounded-full relative"
                   />
-                  <div className="drawer-content">
-                    <label
-                      htmlFor="my-drawer-6"
-                      className="drawer-button  cursor-pointer"
-                    >
-                      <img
-                        src={cartImg}
-                        alt=""
-                        className="hover:bg-[#e2e2e2] p-2 rounded-full relative"
-                      />
-                      <span className="badge badge-sm bg-[#e17100] text-[#ffffff] indicator-item absolute top-0 left-6 rounded-full">
-                        {carts.length}
-                      </span>
-                    </label>
-                  </div>
-                  <div className="drawer-side ">
-                    <label
-                      htmlFor="my-drawer-6"
-                      className="drawer-overlay"
-                    ></label>
-
-                    <div className="menu bg-base-200 w-100 p-4">
-                      <div className="flex justify-between items-center pr-5">
-                        <h1 className="text-2xl font-bold mb-4">
-                          Shopping Cart
-                        </h1>
-
-                        <label
-                          htmlFor="my-drawer-6"
-                          className="btn btn-sm btn-circle mb-4"
-                        >
-                          ✕
-                        </label>
-                      </div>
-
-                      <div
-                        className="
-                                            h-160
-                                            overflow-y-auto
-                                            [&::-webkit-scrollbar]:w-1.5
-                                            [&::-webkit-scrollbar-track]:bg-base-200
-                                            [&::-webkit-scrollbar-thumb]:bg-primary
-                                            [&::-webkit-scrollbar-thumb]:rounded-full
-                                            "
-                      >
-                        <AddToCard />
-                      </div>
-
-                      <div className="bg-gray-200 pb-5 px-4 text-center">
-                        <div className="pt-4 flex justify-between px-3">
-                          <h2 className="text-xl font-semibold">Subtotal:</h2>
-                          <span className="text-xl">TK {totalPrice}.00</span>
-                        </div>
-
-                        <div className="pt-20 space-y-3 pb-4">
-                          <div className="pt-20 space-y-3 pb-4">
-                            <button
-                              className="btn rounded-2xl bg-[#fc8934] w-full"
-                              onClick={() =>
-                                document.getElementById("cashModal").showModal()
-                              }
-                            >
-                              <IoCartOutline/>
-                              ক্যাশ অন ডেলিভারিতে অর্ডার করুন
-                            </button>
-                            
-                          </div>
-                        </div>
-
-                        <Link to="/ShoppingCart">
-                          <u className="cursor-pointer">View Cart</u>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
+                  <span className="badge badge-sm bg-[#e17100] text-[#ffffff] indicator-item absolute top-0 left-6 rounded-full">
+                    {cart.length}
+                  </span>
                 </div>
               </div>
             </div>

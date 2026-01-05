@@ -1,25 +1,23 @@
 import React, { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { UseContext } from "../Context/UseContext";
 import useAxiosSecure from "../Hook/useAxiosSecure";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import UseCart from "../Hook/UseCart";
 
 const AllProductCart = ({ product }) => {
   const { images, name, category, price, _id } = product;
   const axiosSecure = useAxiosSecure();
-  const { carts = [], setCarts, user } = useContext(UseContext);
-
+  const { user } = useContext(UseContext);
+  const navigate = useNavigate();
   const notify = () => toast.success("Product added to cart 🛒");
-
-  const reloadCart = async () => {
-    if (!user?.email) return;
-    const res = await axiosSecure.get(`/cart?email=${user.email}`);
-    setCarts(res.data || []);
-  };
-
+  const location = useLocation();
+  const [cart, refetch] = UseCart();
+ 
   const handleAddToCart = async (id) => {
     try {
-      const existingCart = carts.find((item) => item.productId === id);
+      const existingCart = cart.find((item) => item.productId === id);
 
       if (existingCart) {
         const newQty = existingCart.quantity + 1;
@@ -29,14 +27,11 @@ const AllProductCart = ({ product }) => {
         );
 
         if (data.modifiedCount === 1) {
-          setCarts(
-            carts.map((item) =>
-              item._id === existingCart._id
-                ? { ...item, quantity: newQty }
-                : item
-            )
+          cart.map((item) =>
+            item._id === existingCart._id ? { ...item, quantity: newQty } : item
           );
           toast.success("Product also added to cart 🛒");
+          refetch();
         }
         return;
       }
@@ -51,10 +46,27 @@ const AllProductCart = ({ product }) => {
         name,
       };
 
-      const res = await axiosSecure.post("/cart/add", cartInfo);
-      if (res.data?.insertedId) {
-        notify();
-        reloadCart();
+      if (user?.email) {
+        const res = await axiosSecure.post("/cart/add", cartInfo);
+
+        if (res.data?.insertedId) {
+          notify();
+          refetch();
+        }
+      } else {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, login!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login", { state: { from: location } });
+          }
+        });
       }
     } catch (err) {
       if (err) {
@@ -84,7 +96,9 @@ const AllProductCart = ({ product }) => {
 
         <div className="card-actions justify-center">
           <Link to="/order">
-            <button className="btn shadow-gray-500 shadow  bg-[#e17100] text-white">Order Now</button>
+            <button className="btn shadow-gray-500 shadow  bg-[#e17100] text-white">
+              Order Now
+            </button>
           </Link>
 
           <div className="shadow-gray-500 shadow rounded-lg">

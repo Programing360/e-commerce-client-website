@@ -4,13 +4,20 @@ import { useForm } from "react-hook-form";
 import { UseContext } from "../../Context/UseContext";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { toast, Bounce, ToastContainer } from "react-toastify";
+import UseCart from "../../Hook/UseCart";
+import UseAllProduct from "../../Hook/UseAllProducts";
 
 const ModalBox = () => {
-  const { user, carts, allProducts, totalPrice } = use(UseContext);
+  const { user } = use(UseContext);
   const [loading, setLoading] = useState(true);
   const [shipping, setShipping] = useState(70);
-
+  const [cart] = UseCart();
+  const [allProducts] = UseAllProduct();
   const axiosSecure = useAxiosSecure();
+  const totalPrice = cart.reduce(
+    (prePrice, newPrice) => prePrice + newPrice.price,
+    0
+  );
 
   const {
     register,
@@ -28,7 +35,7 @@ const ModalBox = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const orderItems = carts.map((cart) => {
+  const orderItems = cart.map((cart) => {
     const product = allProducts.find((p) => p._id === cart.productId);
     // console.log(product.images?.[0])
     return {
@@ -41,7 +48,7 @@ const ModalBox = () => {
   // console.log(orderItems)
   // Submit order
   const onSubmit = async (data) => {
-    const items = carts.map((cart) => {
+    const items = cart.map((cart) => {
       const product = allProducts.find((p) => p._id === cart.productId);
       return {
         productId: cart.productId,
@@ -71,7 +78,7 @@ const ModalBox = () => {
     try {
       await axiosSecure.post("/orders", orderData);
       //   reset();
-      
+
       toast("আপনার অর্ডার সফল হয়েছে 🎉", {
         position: "top-center",
         autoClose: 5000,
@@ -239,7 +246,6 @@ const ModalBox = () => {
               >
                 অর্ডার কনফার্ম করুন
               </button>
-              
             </form>
           )}
         </div>

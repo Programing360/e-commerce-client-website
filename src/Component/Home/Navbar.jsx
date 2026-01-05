@@ -9,36 +9,28 @@ import loginIcon from "../../assets/loginIcon.png";
 import dashboardIcon from "../../assets/dashboardIcon.png";
 import { IoCartOutline } from "react-icons/io5";
 import ModalBox from "../../Layout/ModalBox/ModalBox";
+import UseCart from "../../Hook/UseCart";
 
 const Navbar = () => {
-  const { carts, allProducts, totalPrice, setTotalPrice, user, UserLogout } =
-    useContext(UseContext);
+  const { user, UserLogout } = useContext(UseContext);
   const [dashboardAdmin, setDashboardAdmin] = useState(false);
+  const [cart] = UseCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (user?.email !== "fhlimon360@gmail.com") return;
-
-    fetch(`http://localhost:5000/orders?email=${user?.email}`)
+    fetch(`http://localhost:5000/orders?email=${user.email}`, {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => {
-        if (data) {
-          setDashboardAdmin(!!data);
-        }
+        setDashboardAdmin(data.length > 0); // or your admin check logic
       });
   }, [user?.email]);
-
-  useEffect(() => {
-    const totalPrice = carts?.reduce((total, cart) => {
-      const product = allProducts?.find((p) => p._id === cart.productId);
-
-      return product ? total + product.price * cart.quantity : total;
-    }, 0);
-
-    setTotalPrice(totalPrice);
-  }, [carts, allProducts, setTotalPrice]);
-
-  const navigate = useNavigate();
-
+  const totalPrice = cart.reduce(
+    (prePrice, newPrice) => prePrice + newPrice.price,
+    0
+  );
   const handleLogout = () => {
     UserLogout()
       .then(() => {
@@ -195,19 +187,19 @@ const Navbar = () => {
                   className=" drawer-button"
                 >
                   <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M4 6h16M4 12h16M4 18h16"
-                      />
-                    </svg>
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
                 </label>
               </div>
               <div className="drawer-side">
@@ -299,7 +291,7 @@ const Navbar = () => {
                     className="hover:bg-[#e2e2e2] p-2 rounded-full relative"
                   />
                   <span className="badge badge-sm bg-[#e17100] text-[#ffffff] indicator-item absolute -top-1 -left-1 rounded-full">
-                    {carts.length}
+                    {cart.length}
                   </span>
                 </label>
               </div>

@@ -16,7 +16,7 @@ const ProductAdd = () => {
     // ✅ React Hook Form submit handler
     const onSubmit = async (data) => {
         // image file
-        const image = [data.image];
+        const images = [data.image];
         const price = Number(data.price)
         const discount = Number(data.discount)
 
@@ -31,8 +31,9 @@ const ProductAdd = () => {
             discountPrice: discountPrice,
             weight: data.weight,
             description: data.description,
-            image
+            images
         };
+        console.log(productData)
         await axiosSecure.post('/allProduct', productData)
             .then(res => {
                 if (res.data.insertedId) {
@@ -81,10 +82,10 @@ const ProductAdd = () => {
                     className="w-full border border-[#fe9a00] px-3 py-2 rounded"
                 >
                     <option value="">Select Option</option>
-                    <option value="electronics">Ghee</option>
-                    <option value="fashion">Honey</option>
-                    <option value="grocery">Oil</option>
-                    <option value="grocery">Gur</option>
+                    <option value="Ghee">Ghee</option>
+                    <option value="Honey">Honey</option>
+                    <option value="Oil">Oil</option>
+                    <option value="Gur">Gur</option>
                 </select>
                 {errors.category && (
                     <p className="text-red-500 text-sm">

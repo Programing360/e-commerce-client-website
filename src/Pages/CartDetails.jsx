@@ -1,10 +1,10 @@
 
-import { useContext } from "react";
-import { UseContext } from "../Context/UseContext";
+import useCartUpdate from "../Hook/CartUpdate";
 
+const CartDetails = ({ cart, product, handleRemove }) => {
+  // console.log(cart)
+  const {increaseCart, decreaseCart} =useCartUpdate()
 
-const CartDetails = ({ cart, product, handleRemove  }) => {
-  const { decrease, increase } = useContext(UseContext);
   return (
     <div className="p-4 border border-[#fe8838] rounded mb-3">
       <div className="flex gap-4">
@@ -21,7 +21,7 @@ const CartDetails = ({ cart, product, handleRemove  }) => {
           <div className="flex items-center gap-3 bg-gray-200 p-2 w-max rounded mt-2">
             <div className="flex items-center gap-2">
               <button
-                onClick={() => decrease(cart._id)}
+                onClick={() => decreaseCart(cart.productId)}
                 className="btn btn-sm"
               >
                 −
@@ -32,7 +32,7 @@ const CartDetails = ({ cart, product, handleRemove  }) => {
               </span>
 
               <button
-                onClick={() => increase(cart._id)}
+                onClick={() => increaseCart(cart.productId)}
                 className="btn btn-sm"
               >
                 +

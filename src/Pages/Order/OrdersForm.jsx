@@ -10,22 +10,22 @@ const OrderForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm();
 
   const axiosSecure = useAxiosSecure();
 
   // Create order items
-  const orderItems = carts.map(cart => {
-    const product = allProducts.find(p => p._id === cart.productId);
+  const orderItems = carts.map((cart) => {
+    const product = allProducts.find((p) => p._id === cart.productId);
     return {
       productId: cart.productId,
       quantity: cart.quantity,
-      price: product ? product.price * cart.quantity : 0
+      price: product ? product.price * cart.quantity : 0,
     };
   });
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     const shippingCost = data.shipping === "insideDhaka" ? 60 : 120;
 
     const itemsTotal = orderItems.reduce(
@@ -34,25 +34,25 @@ const OrderForm = () => {
     );
 
     const orderData = {
-      
       customer: {
-        name: (data.firstName)(data.lastName ),
+        name: `${data.firstName} ${data.lastName}`,
         email: data.email,
         phone: data.phone,
         country: data.country,
         address: data.address,
         city: data.city,
-        postalCode: data.postalCode
+        postalCode: data.postalCode,
       },
       items: orderItems,
       subtotal: itemsTotal,
       shippingCost,
-      totalAmount: itemsTotal + shippingCost
+      totalAmount: itemsTotal + shippingCost,
     };
-
-    axiosSecure.post("/orders", orderData).then(res => {
+    console.log(orderData)
+    axiosSecure.post("/orders", orderData).then((res) => {
       if (res.data) {
         toast.success("Order placed successfully ✅");
+        console.log(res.data)
       }
     });
   };
@@ -61,13 +61,11 @@ const OrderForm = () => {
     <div className="min-h-screen bg-base-200 px-4 py-10">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
-
           {/* ================= LEFT : DELIVERY FORM ================= */}
           <div className="lg:w-1/2 bg-white p-6 rounded-xl shadow">
             <h2 className="text-2xl font-bold mb-6">Delivery</h2>
 
             <div className="space-y-4">
-
               {/* Country */}
               <div>
                 <label className="label font-medium">Country</label>
@@ -123,7 +121,7 @@ const OrderForm = () => {
                   <input
                     type="email"
                     {...register("email", {
-                      required: "Email is required"
+                      required: "Email is required",
                     })}
                     className="input input-bordered w-full outline-0"
                     placeholder="Email address"
@@ -150,7 +148,8 @@ const OrderForm = () => {
 
                 <div className="w-1/2">
                   <label className="label font-medium">
-                    Postal Code <span className="text-gray-400">(optional)</span>
+                    Postal Code{" "}
+                    <span className="text-gray-400">(optional)</span>
                   </label>
                   <input
                     type="text"
@@ -168,7 +167,7 @@ const OrderForm = () => {
                   type="tel"
                   {...register("phone", {
                     required: true,
-                    maxLength: 15
+                    maxLength: 15,
                   })}
                   className="input input-bordered w-full outline-0"
                   placeholder="+880..."
@@ -183,9 +182,9 @@ const OrderForm = () => {
 
             {/* Cart Items */}
             <div className="space-y-4 max-h-64 overflow-y-auto">
-              {carts.map(cart => {
+              {carts.map((cart) => {
                 const product = allProducts.find(
-                  p => p._id === cart.productId
+                  (p) => p._id === cart.productId
                 );
                 if (!product) return null;
 
@@ -212,9 +211,7 @@ const OrderForm = () => {
 
             {/* Shipping */}
             <div>
-              <h3 className="text-lg font-semibold mb-3">
-                Shipping Method
-              </h3>
+              <h3 className="text-lg font-semibold mb-3">Shipping Method</h3>
 
               <div className="space-y-2">
                 <label className="flex items-center gap-3 cursor-pointer">
@@ -244,7 +241,6 @@ const OrderForm = () => {
             <button className="btn bg-linear-to-r via-amber-400 from-fuchsia-400 w-full rounded-xl text-white">
               Place Order
             </button>
-              
           </div>
         </div>
       </form>

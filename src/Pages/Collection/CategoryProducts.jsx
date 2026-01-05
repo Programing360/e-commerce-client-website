@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useEffect, useState } from "react";
@@ -82,9 +82,9 @@ const CategoryProducts = () => {
             </span>
           </div>
           <div>
-            <button
-              onClick={() => handleAddToCart(product._id)}
-              className="
+            <Link to={`/productDetails/${product._id}`}>
+              <button
+                className="
                           w-full mt-2 py-2
                           border border-amber-700 rounded-lg
                           text-amber-700 font-medium
@@ -92,9 +92,10 @@ const CategoryProducts = () => {
                           hover:bg-amber-600 hover:text-white
                           active:scale-95
                         "
-            >
-              Quick Add
-            </button>
+              >
+                Quick Add
+              </button>
+            </Link>
           </div>
         </div>
       ))}
