@@ -14,7 +14,7 @@ const AddToCard = () => {
     const product = allProducts.find(
       p => p._id === cart.productId
     );
-    console.log(product)
+    
     return {
       ...cart,
       product

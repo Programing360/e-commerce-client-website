@@ -50,15 +50,16 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-
-      if (currentUser?.email) {
+      if (currentUser) {
         axiosSecure.post("/jwt", { email: currentUser?.email }).then((res) => {
-          localStorage.setItem("access-token", res.data.token);
+          if (res.data.token) {
+            console.log(res.data);
+            localStorage.setItem("access-token", res.data.token);
+          } else {
+            localStorage.removeItem("access-token");
+          }
         });
-      } else {
-        localStorage.removeItem("access-token");
       }
-
       setLoading(false);
     });
     return () => unsub();
@@ -86,7 +87,6 @@ const AuthProvider = ({ children }) => {
   // };
 
   const dataInfo = {
-   
     carts,
     setCarts,
     user,
@@ -103,7 +103,6 @@ const AuthProvider = ({ children }) => {
     setErrorMessage,
     setCount,
     count,
-    
   };
 
   return <UseContext value={dataInfo}>{children}</UseContext>;
