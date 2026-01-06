@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         path: "productDetails/:id",
         Component: ProductDetails,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/allProduct/${params.id}`,{
+          fetch(`https://e-commerce-server-website.vercel.app/allProduct/${params.id}`,{
             credentials: "include"
           }),
       },

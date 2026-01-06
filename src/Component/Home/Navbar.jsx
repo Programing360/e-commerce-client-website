@@ -19,7 +19,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (user?.email !== "fhlimon360@gmail.com") return;
-    fetch(`http://localhost:5000/orders?email=${user.email}`, {
+    fetch(`https://e-commerce-server-website.vercel.app/orders?email=${user.email}`, {
       credentials: "include",
     })
       .then((res) => res.json())
