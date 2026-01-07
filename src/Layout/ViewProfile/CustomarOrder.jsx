@@ -5,30 +5,26 @@ import { UseContext } from "../../Context/UseContext";
 
 const CustomerOrder = () => {
     const [orders, setOrders] = useState([]);
-    const [id, setId] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { user, carts  } = use(UseContext)
+    const { user  } = use(UseContext)
 
 
-    
-    console.log(orders, carts,id)
-    
+
     const axiosSecure = useAxiosSecure()
 
     useEffect(() => {
         if (!user?.email) return;
 
         axiosSecure
-            .get(`/orders?email=${user.email}`)
+            .get(`/userOrders?email=${user?.email}`)
             .then(res => {
-                setId(res.data._id)
-                setOrders(res.data);
+                setOrders(res?.data);
                 setLoading(false);
             })
             .catch(err => {
-                console.log(err)
+                alert(err)
             })
-    }, [user]);
+    }, [user, axiosSecure]);
 
     if (loading) {
         return <p className="text-center position-absolute bottom-50 end-50">Loading...</p>;

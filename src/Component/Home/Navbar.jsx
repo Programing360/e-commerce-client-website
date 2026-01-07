@@ -18,19 +18,27 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.email !== "fhlimon360@gmail.com") return;
-    fetch(`https://e-commerce-server-website.vercel.app/orders?email=${user.email}`, {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setDashboardAdmin(data.length > 0); // or your admin check logic
-      });
-  }, [user?.email]);
+    if (user?.email !== "fhlimon360@gmail.com") {
+      return;
+    } else {
+      fetch(
+        `https://e-commerce-server-website.vercel.app/userOrders?email=${user?.email}`,
+        {
+          credentials: "include",
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.length > 0) {
+            setDashboardAdmin(true); // or your admin check logic
+          }
+        });
+    }
+  }, []);
   const totalPrice = cart.reduce(
     (prePrice, newPrice) => prePrice + newPrice.price,
     0
-  );        
+  );
   const handleLogout = () => {
     UserLogout()
       .then(() => {
@@ -42,7 +50,7 @@ const Navbar = () => {
   const dashboard = dashboardAdmin && (
     <>
       <Link to="/dashboard" className="tooltip" data-tip="Dashboard">
-        <img className="dash " src={dashboardIcon} alt="" />
+        <img className="dash" src={dashboardIcon} alt="" />
       </Link>
     </>
   );
@@ -92,9 +100,9 @@ const Navbar = () => {
   );
 
   const navClass =
-    "relative font-medium text-gray-700 hover:text-primary transition " +
+    "relative font-medium text-gray-700 hover:text-orange-300  transition " +
     "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 " +
-    "after:bg-primary after:transition-all after:duration-300 " +
+    "after:text-orange-300 after:transition-all after:duration-300 " +
     "hover:after:w-full text-[#2b2b2b]";
 
   const menuItems = (
@@ -166,7 +174,8 @@ const Navbar = () => {
     <div className="">
       <div className="bg-amber-600 text-center md:w-auto text-white py-2">
         <p className="">
-          আমাদের যে কোন পণ্য অর্ডার করতে কল বা WhatsApp করুন: +8801754318654 || +8801641616910
+          আমাদের যে কোন পণ্য অর্ডার করতে কল বা WhatsApp করুন: +8801754318654 ||
+          +8801641616910
         </p>
       </div>
       <div className="navbar shadow bg-[#ffffff]">
@@ -260,8 +269,8 @@ const Navbar = () => {
         {/* Left - Logo */}
 
         <div className="navbar-center">
-          <NavLink to="/" className="md:text-xl font-bold text-primary ">
-            PCT-Shop
+          <NavLink to="/" className="md:text-xl font-bold text-shadow-amber-400">
+            Amader-Shop
           </NavLink>
         </div>
 
@@ -343,10 +352,15 @@ const Navbar = () => {
 
                     <Link to="/ShoppingCart">
                       <u
-                      onClick={() => {
-                        document.getElementById('my-drawer-5').checked = false;
-                      }}
-                      className="cursor-pointer">View Cart</u>
+                        onClick={() => {
+                          document.getElementById(
+                            "my-drawer-5"
+                          ).checked = false;
+                        }}
+                        className="cursor-pointer"
+                      >
+                        View Cart
+                      </u>
                     </Link>
                   </div>
                 </div>
@@ -360,7 +374,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="navbar top-0 w-full  bg-gray-400 hidden lg:block pt-4">
+      <div className="navbar top-0 w-full  bg-gray-200 hidden lg:block pt-4">
         <div className="flex flex-row justify-center px-4">
           {/* Desktop Menu */}
           <div className="navbar-center flex-wrap none lg:block">

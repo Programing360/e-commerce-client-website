@@ -24,7 +24,7 @@ const Login = () => {
             })
             .catch(error => {
                 if (error) {
-                    const err = <><p>email already use</p></>
+                    const err = <p>email already use</p>
                     setErrorMessage(err);
                 }
             });

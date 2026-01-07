@@ -6,7 +6,7 @@ import OrderCart from "./OrderCart";
 const OrderDetails = () => {
     const [orders, setOrders] = useState([])
     const axiosSecure = useAxiosSecure()
-
+    
     useEffect(() => {
         axiosSecure.get('/orderDetails')
             .then(res => setOrders(res.data))

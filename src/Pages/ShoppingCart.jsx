@@ -19,7 +19,6 @@ const ShoppingCart = () => {
     return cartId._id;
   })
 
-  console.log(id[0])
 
   const handleRemove = async (cartId) => {
     // console.log(cartId)
