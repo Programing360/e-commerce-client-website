@@ -10,10 +10,9 @@ const useCartUpdate = () => {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 
-
   const updatecartQuentity = useMutation({
     mutationFn: ({ cartId, quantity }) => {
-     return axiosSecure.patch(`/cart/increase/${cartId}`, { quantity });
+      return axiosSecure.patch(`/cart/increase/${cartId}`, { quantity });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["cart"]);
@@ -21,7 +20,7 @@ const useCartUpdate = () => {
   });
   const updatecartQuentityDecrease = useMutation({
     mutationFn: ({ cartId, quantity }) => {
-     return axiosSecure.patch(`/cart/decrease/${cartId}`, { quantity });
+      return axiosSecure.patch(`/cart/decrease/${cartId}`, { quantity });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["cart"]);
@@ -29,8 +28,7 @@ const useCartUpdate = () => {
   });
 
   const increaseCart = (id) => {
-      const cartItem = cart.find((cartId) => cartId.productId === id);
-      console.log(cartItem)
+    const cartItem = cart.find((cartId) => cartId.productId === id);
     if (!cartItem) return;
     updatecartQuentity.mutate({
       cartId: cartItem._id,
@@ -50,8 +48,7 @@ const useCartUpdate = () => {
   return {
     increaseCart,
     decreaseCart,
-    isloading: updatecartQuentity.isPending
-
+    isloading: updatecartQuentity.isPending,
   };
 };
 

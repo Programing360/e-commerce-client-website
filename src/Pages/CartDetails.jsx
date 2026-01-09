@@ -1,12 +1,12 @@
-
 import useCartUpdate from "../Hook/CartUpdate";
 
 const CartDetails = ({ cart, product, handleRemove }) => {
   // console.log(cart)
-  const {increaseCart, decreaseCart} =useCartUpdate()
+  const { increaseCart, decreaseCart} = useCartUpdate();
 
   return (
     <div className="p-4 border border-[#fe8838] rounded mb-3">
+      
       <div className="flex gap-4">
         <img
           src={product.images}

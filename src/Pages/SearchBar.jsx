@@ -38,7 +38,7 @@ const SearchBar = () => {
       <input id="top-drawer" type="checkbox" className="peer hidden" />
 
       {/* SEARCH BUTTON */}
-      <label htmlFor="top-drawer" className="btn btn-ghost hover:bg-amber-500 lg:w-xl flex justify-end pr-4 hover:text-[#ffffff] border border-amber-500 rounded-full btn-circle">
+      <label htmlFor="top-drawer" className="btn btn-ghost hover:shadow shadow-gray-500 hover:bg-amber-500 lg:w-xl md:w-40 flex justify-end md:pr-4 pr-2 hover:text-[#ffffff] border bg-[linear-gradient(90deg,rgb(59,130,246),rgb(236,72,153))] rounded-full btn-circle text-[#ffffff]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -73,12 +73,13 @@ const SearchBar = () => {
         </label>
 
         {/* SEARCH INPUT */}
-        <div className="pt-16 pb-6 px-4 flex justify-center">
+        <div className="pt-16 pb-6 px-4 flex justify-center shadow shadow-gray-600">
           <div className="w-full max-w-xl">
             <div className="flex justify-between items-center gap-4">
               <label
                 className="
                             input input-bordered
+                            shadow shadow-amber-300
                             border-[#e17100]
                             rounded-full
                             flex items-center gap-2 outline-0"
@@ -128,7 +129,7 @@ const SearchBar = () => {
                       alt=""
                       className="hover:bg-[#e2e2e2] p-2 rounded-full"
                     />
-                    <span className="badge badge-sm bg-[#e17100] text-[#ffffff] indicator-item absolute -top-2 right-6 rounded-full">
+                    <span className="badge badge-sm shadow-2xl shadow-gray-600 bg-[#e17100] text-[#ffffff] indicator-item absolute -top-2 right-6 rounded-full">
                       {cart.length}
                     </span>
                   </div>

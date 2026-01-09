@@ -3,6 +3,7 @@ import { UseContext } from "../../Context/UseContext";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { toast, ToastContainer } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const OrderForm = () => {
   const { carts, allProducts, totalPrice } = useContext(UseContext);
@@ -48,17 +49,28 @@ const OrderForm = () => {
       shippingCost,
       totalAmount: itemsTotal + shippingCost,
     };
-    console.log(orderData)
+    console.log(orderData);
     axiosSecure.post("/orders", orderData).then((res) => {
       if (res.data) {
         toast.success("Order placed successfully ✅");
-        console.log(res.data)
+        console.log(res.data);
       }
     });
   };
 
   return (
     <div className="min-h-screen bg-base-200 px-4 py-10">
+      <Helmet>
+        <title>OrdersForm | Amader Shop</title>
+
+        <meta
+          name="description"
+          content="Complete your purchase securely at Amader Shop. Fast checkout, secure payment, and reliable delivery across Bangladesh."
+        />
+
+        <link rel="canonical" href="https://www.amadershop.com/checkout" />
+      </Helmet>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
           {/* ================= LEFT : DELIVERY FORM ================= */}

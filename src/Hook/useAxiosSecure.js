@@ -4,7 +4,7 @@ import axios from "axios";
 const useAxiosSecure = () => {
   const axiosSecure = useMemo(() => {
     const instance = axios.create({
-      baseURL: "https://e-commerce-server-website.vercel.app",
+      baseURL: "http://localhost:5000",
       withCredentials: true,
     });
 

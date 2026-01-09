@@ -7,8 +7,9 @@ import UseAllProduct from '../Hook/UseAllProducts';
 
 const AddToCard = () => {
   const axiosSecure = useAxiosSecure();
-  const [cart,refetch] = UseCart()
+  const [cart,refetch,isLoading] = UseCart()
   const [allProducts] = UseAllProduct()
+
   // console.log(cart)
   const cartItems = cart?.map(cart => {
     const product = allProducts.find(
@@ -39,6 +40,9 @@ const AddToCard = () => {
   return (
     <div>
 
+      {
+        isLoading && <label htmlFor="my-drawer-1" aria-label="close sidebar" className="drawer-overlay"></label>
+      }
 
       {cartItems?.map(cart => {
         const product = allProducts.find(

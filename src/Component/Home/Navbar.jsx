@@ -17,16 +17,25 @@ const Navbar = () => {
   const [cart] = UseCart();
   const navigate = useNavigate();
 
+  const [scroll, setScroll] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = (
+      setScroll(window.scrollY > 10)
+    )
+    window.addEventListener('scroll', handleScroll)
+
+    return window.removeEventListener('scroll', handleScroll)
+  },[])
+
+
   useEffect(() => {
     if (user?.email !== "fhlimon360@gmail.com") {
       return;
     } else {
-      fetch(
-        `https://e-commerce-server-website.vercel.app/userOrders?email=${user?.email}`,
-        {
-          credentials: "include",
-        }
-      )
+      fetch(`http://localhost:5000/userOrders?email=${user?.email}`, {
+        credentials: "include",
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data.length > 0) {
@@ -36,9 +45,10 @@ const Navbar = () => {
     }
   }, []);
   const totalPrice = cart.reduce(
-    (prePrice, newPrice) => prePrice + newPrice.price,
+    (prePrice, newPrice) => prePrice + newPrice.price * newPrice.quantity,
     0
   );
+  // console.log(totalPrice, cart)
   const handleLogout = () => {
     UserLogout()
       .then(() => {
@@ -100,7 +110,7 @@ const Navbar = () => {
   );
 
   const navClass =
-    "relative font-medium text-gray-700 hover:text-orange-300  transition " +
+    "relative font-medium text-gray-700 hover:text-[#a037f9]" +
     "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 " +
     "after:text-orange-300 after:transition-all after:duration-300 " +
     "hover:after:w-full text-[#2b2b2b]";
@@ -172,13 +182,18 @@ const Navbar = () => {
 
   return (
     <div className="">
-      <div className="bg-amber-600 text-center md:w-auto text-white py-2">
+      <div className="bg-gradient-to-r from-[#fc8934] via-[#fc8934] to-[#fcc734] text-center md:w-auto text-white py-2">
         <p className="">
           আমাদের যে কোন পণ্য অর্ডার করতে কল বা WhatsApp করুন: +8801754318654 ||
           +8801641616910
         </p>
       </div>
-      <div className="navbar shadow bg-[#ffffff]">
+      <div className={`
+        sticky top-0 z-50
+        transition-all duration-300
+       navbar shadow bg-[#ffffff]
+        ${scroll ? "shadow-md" : "shadow-none"}
+      `}>
         <div className="navbar-start">
           <div className="dropdown block lg:hidden">
             <div className="drawer">
@@ -269,7 +284,10 @@ const Navbar = () => {
         {/* Left - Logo */}
 
         <div className="navbar-center">
-          <NavLink to="/" className="md:text-xl font-bold text-shadow-amber-400">
+          <NavLink
+            to="/"
+            className="md:text-xl text-lg pr-6 font-bold bg-gradient-to-r from-purple-500 to-purple-700 bg-clip-text text-transparent"
+          >
             Amader-Shop
           </NavLink>
         </div>
@@ -374,7 +392,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="navbar top-0 w-full  bg-gray-200 hidden lg:block pt-4">
+      <div className="navbar top-0 w-full bg-gray-200 hidden lg:block pt-4">
         <div className="flex flex-row justify-center px-4">
           {/* Desktop Menu */}
           <div className="navbar-center flex-wrap none lg:block">

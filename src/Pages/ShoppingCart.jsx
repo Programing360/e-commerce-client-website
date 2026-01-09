@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import UseCart from "../Hook/UseCart";
 import UseAllProduct from "../Hook/UseAllProducts";
 import CartUpdate from "../Hook/CartUpdate";
+import { Helmet } from "react-helmet-async";
 
 const ShoppingCart = () => {
   const [cart, refetch] = UseCart();
@@ -12,13 +13,12 @@ const ShoppingCart = () => {
 
   // 🔴 REMOVE HANDLER (Perfect)
   const totalPrice = cart.reduce(
-    (prePrice, newPrice) => prePrice + newPrice.price,
+    (prePrice, newPrice) => prePrice + newPrice.price * newPrice.quantity,
     0
   );
   const id = cart.map((cartId) => {
     return cartId._id;
-  })
-
+  });
 
   const handleRemove = async (cartId) => {
     // console.log(cartId)
@@ -27,7 +27,7 @@ const ShoppingCart = () => {
       if (data.deletedCount === 1) {
         // ✅ instant UI update
         cart.filter((item) => item._id !== cartId);
-        refetch()
+        refetch();
       }
     } catch (err) {
       alert(err);
@@ -47,6 +47,17 @@ const ShoppingCart = () => {
   //   console.log(cartProducts,cart, id);
   return (
     <div>
+      <Helmet>
+        <title>Shoping Cart | Amader Shop</title>
+
+        <meta
+          name="description"
+          content="Review your selected products in the cart. Proceed to checkout easily and securely with Amader Shop."
+        />
+
+        <link rel="canonical" href="https://www.amadershop.com/cart" />
+      </Helmet>
+
       <div className="bg-[#fe8838] py-4">
         <h1 className="text-3xl font-bold text-center my-8 text-[#ffffff]">
           Shopping Cart
@@ -147,11 +158,11 @@ const ShoppingCart = () => {
         ))}
 
         <div className="grid h-40 grid-rows-3 justify-end  gap-4 mt-6">
-          <div className="flex justify-between mx-5 lg:mx-auto">
-            <p className="">SubTotal:</p>
+          <div className="flex justify-between items-center md:gap-50 mx-6 lg:mx-auto">
+            <p className="font-bold">SubTotal:</p>
             <p className="font-bold text-lg">TK {totalPrice}</p>
           </div>
-          <p>Taxes and shipping calculated at checkout</p>
+          <p className="text-center">Taxes and shipping calculated at checkout</p>
           <Link to="/order">
             <button className="btn w-sm bg-[#e17100] text-[#ffffff] hover:bg-[#fe8838]">
               Checkout

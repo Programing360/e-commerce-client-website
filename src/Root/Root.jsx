@@ -1,28 +1,38 @@
-import React, { use } from 'react';
-import Navbar from '../Component/Home/Navbar';
-import { Outlet } from 'react-router';
-import Footer from '../Component/Home/Footer';
-import { UseContext } from '../Context/UseContext';
+import React, { use, useEffect, useState } from "react";
+import Navbar from "../Component/Home/Navbar";
+import { Outlet, useLocation } from "react-router";
+import Footer from "../Component/Home/Footer";
+import { UseContext } from "../Context/UseContext";
 
 const Root = () => {
-    const { loading } = use(UseContext);
-    
-        if (loading) return ;
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
-    return (
-        <div>
-            <Navbar></Navbar>
-            {
-                loading ? <span 
-                className="loading loading-spinner loading-xl grid 
-                h-56 grid-cols-3 place-items-center 
-                gap-4 mx-auto ">
-                </span> : <Outlet></Outlet>
-            }
-            
-            <Footer></Footer>
+  useEffect(() => {
+    
+    setLoading(true);
+    
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800); // spinner duration
+
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  return (
+    <div>
+      <Navbar></Navbar>
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/70 dark:bg-black/70">
+          <span className="loading loading-spinner loading-lg"></span>
         </div>
-    );
+      )}
+        <Outlet></Outlet>
+
+      <Footer></Footer>
+    </div>
+  );
 };
 
 export default Root;

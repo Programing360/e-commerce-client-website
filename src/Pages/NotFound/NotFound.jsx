@@ -1,13 +1,24 @@
+import { Helmet } from "react-helmet-async";
 import { useLocation } from "react-router";
 import { Link } from "react-router";
 
 const NotFound = () => {
-
-    const location = useLocation()
-   const from = location.state?.from || "/";
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center">
+      <Helmet>
+        <title>Not Found | Amader Shop</title>
+
+        <meta
+          name="description"
+          content="Complete your purchase securely at Amader Shop. Fast checkout, secure payment, and reliable delivery across Bangladesh."
+        />
+
+        <link rel="canonical" href="https://my-coffee-9129e.web.app/checkout" />
+      </Helmet>
+
       <h1 className="text-6xl font-bold text-red-500">404</h1>
       <p className="text-xl mt-4">Oops! Page not found</p>
 

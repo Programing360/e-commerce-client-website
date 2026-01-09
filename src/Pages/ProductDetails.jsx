@@ -16,6 +16,7 @@ import { BiBox } from "react-icons/bi";
 import { motion } from "motion/react";
 import Swal from "sweetalert2";
 import UseCart from "../Hook/UseCart";
+import { Helmet } from "react-helmet-async";
 
 const ProductDetails = () => {
   const { user } = useContext(UseContext);
@@ -25,7 +26,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const notify = () => toast.success("Product added to cart 🛒");
   const axiosSecure = useAxiosSecure();
-  const location = useLocation()
+  const location = useLocation();
 
   const handleAddToCart = async (productId) => {
     try {
@@ -89,6 +90,25 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen bg-base-200">
+      <Helmet>
+        <title>Product Details | Amader Shop</title>
+
+        <meta
+          name="description"
+          content="View product details, price, description, and customer reviews. Order now from Amader Shop with fast delivery across Bangladesh."
+        />
+
+        <meta
+          name="keywords"
+          content="product details, buy product online, ecommerce product, amader shop"
+        />
+
+        <link
+          rel="canonical"
+          href={`https://https://my-coffee-9129e.web.app/product/${_id}`}
+        />
+      </Helmet>
+
       <div className="mx-auto px-6 py-12 lg:flex lg:gap-12">
         {/* IMAGE */}
         <div
