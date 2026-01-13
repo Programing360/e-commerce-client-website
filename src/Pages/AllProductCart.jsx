@@ -21,7 +21,7 @@ const AllProductCart = ({ product }) => {
 
       if (existingCart) {
         const newQty = existingCart.quantity + 1;
-        const { data } = await axiosSecure.put(
+        const { data } = await axiosSecure.patch(
           `/cart/update/${existingCart._id}`,
           { quantity: newQty }
         );

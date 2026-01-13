@@ -19,6 +19,11 @@ const Footer = () => {
                     <a className="link link-hover">Press kit</a>
                 </nav>
                 <nav>
+                    {/* <div>
+                        <form>
+                            <input className='border py-4' type="text" name='' placeholder='' />
+                        </form>
+                    </div> */}
                     <h6 className="footer-title">Social</h6>
                     <div className="grid grid-flow-col gap-4">
                         <a>
