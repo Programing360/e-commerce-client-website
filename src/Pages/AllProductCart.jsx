@@ -22,10 +22,8 @@ const AllProductCart = ({ product }) => {
       if (existingCart) {
         const newQty = existingCart.quantity + 1;
         const { data } = await axiosSecure.patch(
-          `/cart/update/${existingCart._id}`,
-          { quantity: newQty }
-        );
-
+          `/cart/update/${existingCart._id}`,{ quantity: newQty } );
+      
         if (data.modifiedCount === 1) {
           cart.map((item) =>
             item._id === existingCart._id ? { ...item, quantity: newQty } : item

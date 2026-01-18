@@ -6,7 +6,8 @@ import UseCart from "./UseCart";
 
 const useCartUpdate = () => {
   const [cart] = UseCart();
-  //   const [allProducts] = UseAllProduct();
+  //  card data update by using tanstack react query mutation
+  
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
 

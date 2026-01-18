@@ -16,6 +16,8 @@ import Setting from "../Layout/ViewProfile/Setting";
 import Collection from "../Pages/Collection/Collection";
 import CategoryProducts from "../Pages/Collection/CategoryProducts";
 import NotFound from "../Pages/NotFound/NotFound";
+import AboutUs from "../Pages/AboutUs/AboutUs";
+import RetrunPolicy from "../Pages/AboutUs/RetrunPolicy";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +32,8 @@ const router = createBrowserRouter([
         path: "productDetails/:id",
         Component: ProductDetails,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/allProduct/${params.id}`,{
-            credentials: "include"
+          fetch(`http://localhost:5000/allProduct/${params.id}`, {
+            credentials: "include",
           }),
       },
 
@@ -54,6 +56,14 @@ const router = createBrowserRouter([
       {
         path: "*",
         Component: NotFound,
+      },
+      {
+        path: "/about",
+        Component: AboutUs,
+      },
+      {
+        path: "/retrun",
+        Component: RetrunPolicy,
       },
     ],
   },

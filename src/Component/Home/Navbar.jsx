@@ -288,7 +288,7 @@ const Navbar = () => {
             to="/"
             className="md:text-xl text-lg pr-6 font-bold bg-gradient-to-r from-purple-500 to-purple-700 bg-clip-text text-transparent"
           >
-            Amader-Shop
+            ORGANIC SUNNAH SHOP
           </NavLink>
         </div>
 
