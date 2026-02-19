@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 
 const AllProduct = () => {
   const [allProducts, isLoading] = UseAllProduct();
+  console.log(allProducts);
 
   return (
     <div className="mt-10">
@@ -30,8 +31,8 @@ const AllProduct = () => {
           <span className="loading w-1/7 loading-bars loading-xl"></span>
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 container mx-auto mt-12 px-2">
-        {allProducts.map((product, index) => (
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 md:gap-8 gap-2 container mx-auto mt-12 px-2">
+        {allProducts?.map((product, index) => (
           <AllProductCart key={index} product={product}></AllProductCart>
         ))}
       </div>

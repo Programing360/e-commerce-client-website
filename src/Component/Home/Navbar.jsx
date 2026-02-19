@@ -17,17 +17,14 @@ const Navbar = () => {
   const [cart] = UseCart();
   const navigate = useNavigate();
 
-  const [scroll, setScroll] = useState(false)
-
+  const [scroll, setScroll] = useState(false);
+  const adminPage = user?.email === "fhlimon360@gmail.com";
   useEffect(() => {
-    const handleScroll = (
-      setScroll(window.scrollY > 10)
-    )
-    window.addEventListener('scroll', handleScroll)
+    const handleScroll = () => setScroll(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
 
-    return window.removeEventListener('scroll', handleScroll)
-  },[])
-
+    return window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (user?.email !== "fhlimon360@gmail.com") {
@@ -46,7 +43,7 @@ const Navbar = () => {
   }, []);
   const totalPrice = cart.reduce(
     (prePrice, newPrice) => prePrice + newPrice.price * newPrice.quantity,
-    0
+    0,
   );
   // console.log(totalPrice, cart)
   const handleLogout = () => {
@@ -60,7 +57,7 @@ const Navbar = () => {
   const dashboard = dashboardAdmin && (
     <>
       <Link to="/dashboard" className="tooltip" data-tip="Dashboard">
-        <img className="dash" src={dashboardIcon} alt="" />
+        <img className="active:scale-75 transition-transform duration-100" src={dashboardIcon} alt="" />
       </Link>
     </>
   );
@@ -85,11 +82,20 @@ const Navbar = () => {
             {user?.displayName}
           </h1>
           <p className="text-center pb-4">{user?.email}</p>
-          <Link to="profile">
-            <button className="btn btn-ghost mb-4 text-center mx-auto w-full">
-              Your Profile
-            </button>
-          </Link>
+          {adminPage ? (
+            <Link to="/dashboard">
+              <button className="btn btn-ghost mb-4 text-center mx-auto w-full">
+                Admin Page
+              </button>
+            </Link>
+          ) : (
+            <Link to="profile">
+              <button className="btn btn-ghost mb-4 text-center mx-auto w-full">
+                Your Profile
+              </button>
+            </Link>
+          )}
+
           <button
             onClick={handleLogout}
             className="text-center btn btn-ghost border border-[#e17100]"
@@ -109,92 +115,23 @@ const Navbar = () => {
     </>
   );
 
-  const navClass =
-    "relative font-medium text-gray-700 hover:text-[#a037f9]" +
-    "after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 " +
-    "after:text-orange-300 after:transition-all after:duration-300 " +
-    "hover:after:w-full text-[#2b2b2b]";
-
-  const menuItems = (
-    <>
-      <li>
-        <NavLink to="/category/Seller" className={navClass}>
-          Best Seller
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Oil" className={navClass}>
-          Oil
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Ghee" className={navClass}>
-          Ghee (ঘি)
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Dates" className={navClass}>
-          Dates (খেজুর)
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Khejur-gur" className={navClass}>
-          খেজুর গুড়
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Masala" className={navClass}>
-          Masala
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Nuts-Seeds" className={navClass}>
-          Nuts & Seeds
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Gtea-Coffee" className={navClass}>
-          Tea/Coffee
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Honeycomb" className={navClass}>
-          Honeycomb
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Organic-Zone" className={navClass}>
-          Organic Zone
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to="/category/Pickle" className={navClass}>
-          Pickle
-        </NavLink>
-      </li>
-    </>
-  );
-
-  const [open, setOpen] = useState(!true);
-  const toggle = () => {
-    setOpen(!open);
-  };
-
   return (
-    <div className="">
-      <div className="bg-gradient-to-r from-[#fc8934] via-[#fc8934] to-[#fcc734] text-center md:w-auto text-white py-2">
+    <div className="fixed top-10 left-0 right-0 z-50">
+      <div className="bg-gradient-to-r from-[#fc8934] via-[#fc8934] to-[#fcc734] text-center md:w-auto text-white py-2 fixed top-0 left-0 right-0 z-50">
         <p className="">
           আমাদের যে কোন পণ্য অর্ডার করতে কল বা WhatsApp করুন: +8801754318654 ||
           +8801641616910
         </p>
       </div>
-      <div className={`
+      <div
+        className={`
         sticky top-0 z-50
         transition-all duration-300
        navbar shadow bg-[#ffffff]
         ${scroll ? "shadow-md" : "shadow-none"}
-      `}>
-        <div className="navbar-start">
+      `}
+      >
+        <div className="navbar-start w-[10%]">
           <div className="dropdown block lg:hidden">
             <div className="drawer">
               <input
@@ -204,11 +141,7 @@ const Navbar = () => {
               />
               <div className="drawer-content">
                 {/* Page content here */}
-                <label
-                  onClick={toggle}
-                  htmlFor="my-drawer-1"
-                  className=" drawer-button"
-                >
+                <label htmlFor="my-drawer-1" className=" drawer-button">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6"
@@ -233,7 +166,6 @@ const Navbar = () => {
                 ></label>
 
                 <ul className="menu bg-white min-h-screen w-64 sm:w-72 md:w-80 p-4 overflow-y-auto">
-                  {menuItems}
                   <div className="mt-20">
                     {user ? (
                       <div className="">
@@ -244,14 +176,14 @@ const Navbar = () => {
                               <img src={loginImg} alt="" />
                             </button>
                           </Link>
-                          {dashboardAdmin && (
+                          {adminPage && (
                             <Link
                               to="/dashboard"
                               className="tooltip"
                               data-tip="Dashboard"
                             >
                               <img
-                                className="w-8 mb-3 "
+                                className="w-8 mb-3 active:scale-95 transition-transform duration-100"
                                 src={dashboardIcon}
                                 alt="This is Dashboard icon. inside the icon has Customer Order"
                               />
@@ -278,15 +210,15 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="hidden lg:block pl-4 w-12">{dashboard}</div>
+          <div className="hidden lg:block pl-4 md:w-12 ">{dashboard}</div>
         </div>
 
         {/* Left - Logo */}
 
-        <div className="navbar-center">
+        <div className=" navbar-end">
           <NavLink
             to="/"
-            className="md:text-xl text-lg pr-6 font-bold bg-gradient-to-r from-purple-500 to-purple-700 bg-clip-text text-transparent"
+            className="md:text-xl text-center  md:pr-6 font-bold bg-gradient-to-r from-purple-500 to-purple-700 bg-clip-text text-transparent"
           >
             ORGANIC SUNNAH SHOP
           </NavLink>
@@ -371,9 +303,8 @@ const Navbar = () => {
                     <Link to="/ShoppingCart">
                       <u
                         onClick={() => {
-                          document.getElementById(
-                            "my-drawer-5"
-                          ).checked = false;
+                          document.getElementById("my-drawer-5").checked =
+                            false;
                         }}
                         className="cursor-pointer"
                       >
@@ -392,16 +323,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="navbar top-0 w-full bg-gray-200 hidden lg:block pt-4">
-        <div className="flex flex-row justify-center px-4">
-          {/* Desktop Menu */}
-          <div className="navbar-center flex-wrap none lg:block">
-            <ul className="flex flex-wrap gap-4">{menuItems}</ul>
-          </div>
-
-          {/* Mobile Menu */}
-        </div>
-      </div>
+      {/* <CategoryNav></CategoryNav> */}
     </div>
   );
 };

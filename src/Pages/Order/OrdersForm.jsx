@@ -174,12 +174,13 @@ const OrderForm = () => {
 
               {/* Phone */}
               <div>
-                <label className="label font-medium">Phone Number</label>
+                <label className="label font-medium text-neutral">Phone Number</label>
                 <input
                   type="tel"
                   {...register("phone", {
                     required: true,
-                    maxLength: 15,
+                    maxLength: 11,
+                    minLength: 11,
                   })}
                   className="input input-bordered w-full outline-0"
                   placeholder="+880..."

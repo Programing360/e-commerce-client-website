@@ -1,6 +1,5 @@
 import React from "react";
 import { Outlet } from "react-router";
-import ItemNavbar from "../../Component/Home/ItemNavbar";
 import CategorySidebar from "./CategorySlider";
 import Navbar from "../../Component/Home/Navbar";
 

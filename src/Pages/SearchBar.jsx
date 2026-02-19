@@ -3,8 +3,6 @@ import { Link } from "react-router";
 import { UseContext } from "../Context/UseContext";
 import cartImg from "../assets/shopping_cart_.svg";
 import loginImg from "../assets/account_circle_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.png";
-import AddToCard from "./AddToCard";
-import { IoCartOutline } from "react-icons/io5";
 import UseAllProduct from "../Hook/UseAllProducts";
 import UseCart from "../Hook/UseCart";
 
@@ -38,7 +36,7 @@ const SearchBar = () => {
       <input id="top-drawer" type="checkbox" className="peer hidden" />
 
       {/* SEARCH BUTTON */}
-      <label htmlFor="top-drawer" className="btn btn-ghost hover:shadow shadow-gray-500 hover:bg-amber-500 lg:w-xl md:w-40 flex justify-end md:pr-4 pr-2 hover:text-[#ffffff] border bg-[linear-gradient(90deg,rgb(59,130,246),rgb(236,72,153))] rounded-full btn-circle text-[#ffffff]">
+      <label htmlFor="top-drawer" className="btn btn-ghost hover:shadow shadow-gray-500 hover:bg-amber-500 lg:w-xl md:w-40 flex justify-end md:pr-4 pr-2 hover:text-[#ffffff] border ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"

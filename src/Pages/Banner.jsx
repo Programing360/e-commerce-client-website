@@ -1,5 +1,5 @@
 import React from "react";
-import bannerImg from "../assets/Rajyao-Pure-Gur-300x300.jpg";
+import bannerImg from "../assets/bannerHome.jpg";
 const Banner = () => {
   return (
     <div className="hero bg-gradient-to-r from-[#999123] via-[#e3dba4] min-h-screen">
