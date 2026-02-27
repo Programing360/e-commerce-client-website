@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router";
-// import homeIcon from "../../assets/assets/home (2).png";
+import homeIcon from "../../assets/Home.png";
 import { motion } from "motion/react"
 const CategoryNav = () => {
   const [show, setShow] = useState(true);
@@ -33,7 +33,7 @@ const CategoryNav = () => {
       ${show ? "translate-y-0" : "-translate-y-full"}`}
     >
       <div className="bg-[#1e3c96]">
-        <ul className="flex justify-center gap-6 md:gap-10 text-white py-4">
+        <ul className="flex justify-center gap-2 md:gap-6 md:gap-10 text-white py-4">
           {/* Home */}
           <li>
             <NavLink
@@ -43,7 +43,7 @@ const CategoryNav = () => {
               }
             >
               <div className="flex items-center">
-                <img src='' alt="Home" className="w-5 h-5 mr-2" />
+                <img src={homeIcon} alt="Home" className="w-5 h-5 mr-2" />
                 Home
               </div>
             </NavLink>
@@ -52,7 +52,7 @@ const CategoryNav = () => {
           {/* All Products */}
           <li>
             <NavLink
-              to="/userAllProduct"
+              to="/allProductDetails"
               className={({ isActive }) =>
                 isActive ? activeClass : normalClass
               }

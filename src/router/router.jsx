@@ -18,6 +18,7 @@ import CategoryProducts from "../Pages/Collection/CategoryProducts";
 import NotFound from "../Pages/NotFound/NotFound";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import RetrunPolicy from "../Pages/AboutUs/RetrunPolicy";
+import AllProductDetails from "../Pages/AllProductDetails";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,10 @@ const router = createBrowserRouter([
             credentials: "include",
           }),
       },
-
+      {
+        path:'/allProductDetails',
+        Component:AllProductDetails
+      },
       {
         path: "order",
         Component: OrderForm,

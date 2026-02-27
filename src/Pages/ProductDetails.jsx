@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import {
   Link,
-  Navigate,
   useLoaderData,
   useLocation,
   useNavigate,
 } from "react-router";
 import useAxiosSecure from "../Hook/useAxiosSecure";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import AddToCard from "./AddToCard";
 import { UseContext } from "../Context/UseContext";
 import messangerIcon from "../assets/messenger-social-media-logo-icon-free-png-removebg-preview.png";
@@ -89,7 +88,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200">
+    <div className="min-h-screen bg-base-200 mt-40">
       <Helmet>
         <title>Product Details | Amader Shop</title>
 
@@ -166,7 +165,7 @@ const ProductDetails = () => {
               ক্যাশ অন ডেলিভারিতে অর্ডার করুন
             </button>
           </Link>
-          <a href="https://www.messenger.com/t/100021849781620" target="_blank">
+          <a href="https://business.facebook.com/latest/inbox/all?asset_id=862271796979790&business_id=1250689289085895" target="_blank">
             <motion.button className="btn w-full bg-[#2c3799] mt-5 text-white hover:bg-amber-400">
               <img className="w-10" src={messangerIcon} alt="" />
               Chat with us

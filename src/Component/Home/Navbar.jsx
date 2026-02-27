@@ -10,6 +10,7 @@ import dashboardIcon from "../../assets/dashboardIcon.png";
 import { IoCartOutline } from "react-icons/io5";
 import ModalBox from "../../Layout/ModalBox/ModalBox";
 import UseCart from "../../Hook/UseCart";
+import CategoryNav from "./CategoryNav";
 
 const Navbar = () => {
   const { user, UserLogout } = useContext(UseContext);
@@ -166,10 +167,18 @@ const Navbar = () => {
                 ></label>
 
                 <ul className="menu bg-white min-h-screen w-64 sm:w-72 md:w-80 p-4 overflow-y-auto">
-                  <div className="mt-20">
+                  <div>
+                    <h1 className="text-center font-bold">Category</h1>
+                    <div>
+                      <button className="btn w-full mt-2">Honey</button>
+                      <button className="btn w-full mt-2">Honey</button>
+                      <button className="btn w-full mt-2">Honey</button>
+                    </div>
+                  </div>
+                  <div className="pt-80 ">
                     {user ? (
                       <div className="">
-                        <h1>My Account</h1>
+                        <h1 className=" font-bold">My Account</h1>
                         <div className="flex flex-col gap-2">
                           <Link to="/profile">
                             <button className="btn btn-ghost btn-circle">
@@ -322,7 +331,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
+      {/* <CategoryNav></CategoryNav> */}
       {/* <CategoryNav></CategoryNav> */}
     </div>
   );
