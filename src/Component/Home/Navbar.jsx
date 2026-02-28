@@ -326,7 +326,7 @@ const Navbar = () => {
                       />
                     </div>
 
-                    <span className=" w-6 text-center bg-[#e17100] text-white absolute -top-1 -right-4 rounded-full">
+                    <span className=" w-6 text-center bg-[#e17100] text-white absolute -top-3 -right-3 rounded-full">
                       {cart.length}
                     </span>
                   </label>

@@ -1,8 +1,6 @@
 import AllProductCart from "./AllProductCart";
 import UseAllProduct from "../Hook/UseAllProducts";
 import { Helmet } from "react-helmet-async";
-import { useContext } from "react";
-import { UseContext } from "../Context/UseContext";
 
 
 const AllProduct = () => {
@@ -26,7 +24,7 @@ const AllProduct = () => {
         <link rel="canonical" href="https://my-coffee-9129e.web.app/products" />
       </Helmet>
 
-      <h1 className="text-3xl font-bold text-center">All Products</h1>
+      <h1 className="text-5xl font-semibold text-center">ALL PRODUCTS</h1>
       <div className=" flex justify-center">
         {isLoading && (
           <span className="loading w-1/7 loading-bars loading-xl"></span>

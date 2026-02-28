@@ -98,7 +98,7 @@ const AllProductDetails = () => {
         {/* Products Section */}
         <div className="flex-1 ">
           {/* Sort + Layout */}
-          <div className="flex justify-between items-center mb-6 sticky md:static top-15 md:top-26 z-50 bg-white">
+          <div className="flex justify-between items-center mb-6 sticky md:static top-0 md:top-26 z-50 bg-white">
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
@@ -184,7 +184,7 @@ const AllProductDetails = () => {
               <div
                 key={product._id}
                 className={`border border-gray-300 p-2 md:p-6 relative bg-white 
-                hover:shadow-lg transition duration-300
+                hover:shadow-lg transition duration-300 cursor-pointer
                 ${
                   layout === 1
                     ? "flex flex-col md:flex-row items-center gap-6"
@@ -204,7 +204,7 @@ const AllProductDetails = () => {
                     src={product.images}
                     alt={product.name}
                     className={`object-contain ${
-                      layout === 1 ? "w-40 h-40" : "w-full h-40"
+                      layout === 1 ? "w-60 h-60" : "w-full h-70"
                     }`}
                   />
                 </Link>
@@ -219,7 +219,7 @@ const AllProductDetails = () => {
 
                   <div className="mt-2">
                     <span className="font-semibold text-lg">
-                      Tk {product.discountPrice}.00
+                      Tk {product.discount}.00
                     </span>
                     {product.price && (
                       <span className="line-through text-gray-400 ml-2">

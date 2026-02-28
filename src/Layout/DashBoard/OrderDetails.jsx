@@ -27,7 +27,8 @@ const OrderDetails = () => {
       <table className="table table-xs text-start">
         <thead>
           <tr>
-            <th></th>
+            <th>#</th>
+            <th>Date</th>
             <th>Name</th>
             <th>Email</th>
             <th>Number</th>

@@ -6,6 +6,7 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { toast, Bounce, ToastContainer } from "react-toastify";
 import UseCart from "../../Hook/UseCart";
 import UseAllProduct from "../../Hook/UseAllProducts";
+import moment from "moment";
 
 const ModalBox = () => {
   const { user } = use(UseContext);
@@ -59,7 +60,7 @@ const ModalBox = () => {
     });
     const subtotal = totalPrice;
     const totalAmount = subtotal + shipping;
-
+const newDate = moment().format('L')
     const orderData = {
       customer: {
         name: data.name,
@@ -71,8 +72,7 @@ const ModalBox = () => {
       subtotal,
       shippingCost: shipping,
       totalAmount,
-      paymentMethod: "cash on delivery",
-      createdAt: new Date(),
+      newDate
     };
 
     try {

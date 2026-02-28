@@ -7,14 +7,14 @@ import Swal from "sweetalert2";
 import UseCart from "../Hook/UseCart";
 
 const AllProductCart = ({ product }) => {
-  const { images, name, category, price, _id } = product;
+  const { images, name, category, price, _id, discount } = product;
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(UseContext);
   const navigate = useNavigate();
   const notify = () => toast.success("Product added to cart 🛒");
   const location = useLocation();
   const [cart, refetch] = UseCart();
- 
+
   const handleAddToCart = async (id) => {
     try {
       const existingCart = cart.find((item) => item.productId === id);
@@ -22,11 +22,15 @@ const AllProductCart = ({ product }) => {
       if (existingCart) {
         const newQty = existingCart.quantity + 1;
         const { data } = await axiosSecure.patch(
-          `/cart/update/${existingCart._id}`,{ quantity: newQty } );
-      
+          `/cart/update/${existingCart._id}`,
+          { quantity: newQty },
+        );
+
         if (data.modifiedCount === 1) {
           cart.map((item) =>
-            item._id === existingCart._id ? { ...item, quantity: newQty } : item
+            item._id === existingCart._id
+              ? { ...item, quantity: newQty }
+              : item,
           );
           toast.success("Product also added to cart 🛒");
           refetch();
@@ -74,15 +78,19 @@ const AllProductCart = ({ product }) => {
   };
 
   return (
-    <div data-aos="fade-up" className="card bg-base-100 shadow-sm">
+    <div data-aos="fade-up" className="card bg-base-100 shadow-sm cursor-pointer">
       <Link to={`/productDetails/${_id}`}>
-        <figure className="px-6 pt-6 h-40 flex items-center justify-center">
-          <img src={images} alt={name} className="h-full object-contain" />
+        <figure className="px-6 pt-6 h-70 flex items-center justify-center">
+          <img
+            src={images}
+            alt={name}
+            className="w-full h-full object-contain"
+          />
         </figure>
       </Link>
 
       <div className="card-body text-center">
-        <h2 className="card-title justify-center line-clamp-1">{name}</h2>
+        <h2 className="text-md">{name}</h2>
 
         <Link to={`/category/${category}`}>
           <p className="bg-amber-500 w-24 mx-auto rounded-full text-white">
@@ -90,8 +98,10 @@ const AllProductCart = ({ product }) => {
           </p>
         </Link>
 
-        <p className="text-lg font-bold text-[#e17100]">TK {price}.00</p>
-
+        <div className="flex items-center justify-center ">
+          <h1 className="text-lg font-bold text-[#e17100] mr-6">TK {discount}.00</h1>
+          <span className="line-through text-gray-400">TK {price}.00</span>
+        </div>
         <div className="card-actions justify-center">
           <Link to="/order">
             <button className="btn shadow-gray-500 shadow  bg-[#e17100] text-white">

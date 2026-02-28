@@ -8,7 +8,7 @@ const CustomerOrder = () => {
     const [loading, setLoading] = useState(true);
     const { user  } = use(UseContext)
 
-
+    console.log(orders)
 
     const axiosSecure = useAxiosSecure()
 
@@ -62,7 +62,7 @@ const CustomerOrder = () => {
                 <div className="text-center mt-10">
                     <p className="text-lg font-medium">No order yet</p>
                     <Link
-                        to="/store"
+                        to="/allProductDetails"
                         className="text-amber-600 underline mt-2 inline-block"
                     >
                         Go to store to place order

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { toast, ToastContainer } from "react-toastify";
 import { Helmet } from "react-helmet";
-
+import moment from "moment";
 const OrderForm = () => {
   const { carts, allProducts, totalPrice } = useContext(UseContext);
 
@@ -33,7 +33,7 @@ const OrderForm = () => {
       (total, item) => total + item.price,
       0
     );
-
+    const newDate = moment().format('L')
     const orderData = {
       customer: {
         name: `${data.firstName} ${data.lastName}`,
@@ -48,6 +48,7 @@ const OrderForm = () => {
       subtotal: itemsTotal,
       shippingCost,
       totalAmount: itemsTotal + shippingCost,
+      newDate
     };
     console.log(orderData);
     axiosSecure.post("/orders", orderData).then((res) => {

@@ -6,7 +6,8 @@ const OrderCart = ({ orders, index }) => {
         items,
         subtotal,
         shippingCost,
-        totalAmount
+        totalAmount,
+        newDate
     } = orders;
 
     const {
@@ -22,6 +23,9 @@ const OrderCart = ({ orders, index }) => {
     return (
         <tr>
             <th>{index + 1}</th>
+            <td className="font-medium">
+                {newDate}
+            </td>
             <td className="font-medium">
                 {firstName}{lastName}{name}
             </td>
