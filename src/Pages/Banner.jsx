@@ -2,7 +2,7 @@ import React from "react";
 import bannerImg from "../assets/bannerHome.jpg";
 const Banner = () => {
   return (
-    <div className="hero bg-gradient-to-r from-[#999123] via-[#e3dba4] min-h-screen">
+    <div className="hero bg-gradient-to-r from-[#999123] via-[#e3dba4] md:min-h-screen md:mt-20">
       <div>
         <div className="hero-content flex-col lg:flex-row-reverse">
           <img

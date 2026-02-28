@@ -4,13 +4,13 @@ import img1 from "../../assets/post2.png";
 import person from "../../assets/personme.png";
 const AboutUs = () => {
   return (
-    <div className="">
-      <div className="h-160">
-        <img className="h-[100%] w-full object-cover" src={banner} alt="" />
+    <div className="md:mt-40 mt-20">
+      <div className="md:h-200">
+        <img className="md:h-[110%] w-full object-cover" src={banner} alt="" />
       </div>
 
-      <div className="hero bg-base-200 min-h-screen ">
-        <div className="hero-content flex-col lg:flex-row lg:gap-30">
+      <div className="hero bg-base-200 min-h-screen md:mt-20">
+        <div className="hero-content flex-col md:flex-row md:gap-10">
           <img
             src={img1}
             className="md:max-w-sm lg:max-w-2xl rounded-lg shadow-2xl"

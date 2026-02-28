@@ -8,48 +8,46 @@ import Swal from "sweetalert2";
 import UseCart from "./UseCart";
 
 const useAddToCart = () => {
-     const axiosSecure = useAxiosSecure();
-     const { user } = useContext(UseContext);
-     const navigate = useNavigate();
-     const notify = () => toast.success("Product added to cart 🛒");
-     const location = useLocation();
-     const [cart, refetch] = UseCart()
+  const axiosSecure = useAxiosSecure();
+  const { user } = useContext(UseContext);
+  const navigate = useNavigate();
+  const notify = () => toast.success("Product added to cart 🛒");
+  const location = useLocation();
+  const [cart, refetch] = UseCart();
 
-  const handleAddToCart = async (id) => {
-   
-
-     console.log(id, cart);
+  const handleAddToCart = async (products) => {
+    console.log(products);
 
     try {
-      const existingCart = cart.find((item) => item.productId === id);
-      console.log(existingCart)
-      if (existingCart) {
-        const newQty = existingCart.quantity + 1;
-        const { data } = await axiosSecure.patch(
-          `/cart/update/${existingCart._id}`,
-          { quantity: newQty },
-        );
+      // const existingCart = cart?.find((item) => console.log(item));
+      // console.log(existingCart);
+      // if (existingCart) {
+      //   const newQty = existingCart.quantity + 1;
+      //   const { data } = await axiosSecure.patch(
+      //     `/cart/update/${existingCart._id}`,
+      //     { quantity: newQty },
+      //   );
 
-        if (data.modifiedCount === 1) {
-          cart.map((item) =>
-            item._id === existingCart._id
-              ? { ...item, quantity: newQty }
-              : item,
-          );
-          toast.success("Product also added to cart 🛒");
-          refetch();
-        }
-        return;
-      }
+      //   if (data.modifiedCount === 1) {
+      //     cart.map((item) =>
+      //       item._id === existingCart._id
+      //         ? { ...item, quantity: newQty }
+      //         : item,
+      //     );
+      //     toast.success("Product also added to cart 🛒");
+      //     refetch();
+      //   }
+      //   return;
+      // }
 
       const cartInfo = {
-        productId: id,
+        productId: products._id,
         userId: user?.email,
         quantity: 1,
         email: user?.email,
-        images,
-        price,
-        name,
+        images: products.images,
+        price: products.price,
+        name: products.name,
       };
 
       if (user?.email) {
@@ -80,13 +78,7 @@ const useAddToCart = () => {
       }
     }
   };
-  return handleAddToCart
-}
+  return handleAddToCart;
+};
 
- 
-
-  export default useAddToCart
-   
-
-
-
+export default useAddToCart;

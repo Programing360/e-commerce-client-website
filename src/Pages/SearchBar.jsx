@@ -36,7 +36,8 @@ const SearchBar = () => {
       <input id="top-drawer" type="checkbox" className="peer hidden" />
 
       {/* SEARCH BUTTON */}
-      <label htmlFor="top-drawer" className="btn btn-ghost hover:shadow shadow-gray-500 hover:bg-amber-500 lg:w-xl md:w-40 flex justify-end md:pr-4 pr-2 hover:text-[#ffffff] border ">
+      <label htmlFor="top-drawer" className="btn btn-ghost hover:shadow shadow-gray-500 bg-amber-500 lg:w-xl md:w-40 flex justify-between md:pr-4 pr-2 text-[#ffffff] border ">
+        <h1>Search</h1>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -51,6 +52,7 @@ const SearchBar = () => {
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           />
         </svg>
+        
       </label>
 
       {/* TOP DRAWER */}
@@ -71,7 +73,7 @@ const SearchBar = () => {
         </label>
 
         {/* SEARCH INPUT */}
-        <div className="pt-16 pb-6 px-4 flex justify-center shadow shadow-gray-600">
+        <div className="pt-16 pb-6 px-4 flex justify-center text-yellow-700 shadow shadow-gray-600">
           <div className="w-full max-w-xl">
             <div className="flex justify-between items-center gap-4">
               <label

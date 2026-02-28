@@ -1,12 +1,13 @@
 import AllProductCart from "./AllProductCart";
 import UseAllProduct from "../Hook/UseAllProducts";
 import { Helmet } from "react-helmet-async";
+import { useContext } from "react";
+import { UseContext } from "../Context/UseContext";
 
 
 const AllProduct = () => {
   const [allProducts, isLoading] = UseAllProduct();
-  console.log(allProducts);
-
+  
   return (
     <div className="mt-10">
       <Helmet>

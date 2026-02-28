@@ -5,7 +5,7 @@ const CartDetails = ({ cart, product, handleRemove }) => {
   const { increaseCart, decreaseCart} = useCartUpdate();
 
   return (
-    <div className="p-4 border border-[#fe8838] rounded mb-3">
+    <div className="p-4 border border-[#fe8838] rounded mb-3 ">
       
       <div className="flex gap-4">
         <img

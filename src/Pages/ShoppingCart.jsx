@@ -46,7 +46,7 @@ const ShoppingCart = () => {
 
   //   console.log(cartProducts,cart, id);
   return (
-    <div>
+    <div className="mt-40">
       <Helmet>
         <title>Shoping Cart | Amader Shop</title>
 

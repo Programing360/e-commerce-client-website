@@ -59,7 +59,7 @@ const OrderForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 px-4 py-10">
+    <div className="min-h-screen bg-base-200 px-4 py-10 mt-50">
       <Helmet>
         <title>OrdersForm | Amader Shop</title>
 
@@ -106,7 +106,7 @@ const OrderForm = () => {
                 </div>
 
                 <div className="w-1/2">
-                  <label className="label font-medium">Last Name</label>
+                  <label className="label font-medium">Last Name <span className=" text-green-600">*</span></label>
                   <input
                     type="text"
                     {...register("lastName", { required: true })}
@@ -119,7 +119,7 @@ const OrderForm = () => {
               {/* Address & Email */}
               <div className="flex gap-4">
                 <div className="w-1/2">
-                  <label className="label font-medium">Address</label>
+                  <label className="label font-medium">Address <span className=" text-green-600">*</span></label>
                   <input
                     type="text"
                     {...register("address", { required: true })}
@@ -129,7 +129,7 @@ const OrderForm = () => {
                 </div>
 
                 <div className="w-1/2">
-                  <label className="label font-medium">Email</label>
+                  <label className="label font-medium">Email <span className=" text-green-600">*</span></label>
                   <input
                     type="email"
                     {...register("email", {
@@ -174,7 +174,7 @@ const OrderForm = () => {
 
               {/* Phone */}
               <div>
-                <label className="label font-medium text-neutral">Phone Number</label>
+                <label className="label font-medium text-neutral">Phone Number <span className=" text-green-600">*</span></label>
                 <input
                   type="tel"
                   {...register("phone", {

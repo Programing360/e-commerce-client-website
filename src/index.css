@@ -39,3 +39,35 @@ body{
   /* padding: 10px 4px 0px 3px; */
   border-radius: 3px;
 }
+
+/* Track */
+.custom-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #fde68a; /* amber-200 */
+  border-radius: 5px;
+  outline: none;
+}
+
+/* Thumb (Chrome, Safari, Edge) */
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  background: #f59e0b; /* amber-500 */
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+/* Thumb (Firefox) */
+.custom-range::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  background: #f59e0b;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+}
