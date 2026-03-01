@@ -5,9 +5,10 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { toast, ToastContainer } from "react-toastify";
 import { Helmet } from "react-helmet";
 import moment from "moment";
+import UseCart from "../../Hook/UseCart";
 const OrderForm = () => {
-  const { carts, allProducts, totalPrice } = useContext(UseContext);
-
+  const { allProducts } = useContext(UseContext);
+  const [cart] = UseCart();
   const {
     register,
     handleSubmit,
@@ -15,9 +16,12 @@ const OrderForm = () => {
   } = useForm();
 
   const axiosSecure = useAxiosSecure();
-
+  const totalPrice = cart.reduce(
+    (prePrice, newPrice) => prePrice + newPrice.price,
+    0,
+  );
   // Create order items
-  const orderItems = carts.map((cart) => {
+  const orderItems = cart?.map((cart) => {
     const product = allProducts.find((p) => p._id === cart.productId);
     return {
       productId: cart.productId,
@@ -28,12 +32,13 @@ const OrderForm = () => {
 
   const onSubmit = (data) => {
     const shippingCost = data.shipping === "insideDhaka" ? 60 : 120;
-
+    
     const itemsTotal = orderItems.reduce(
       (total, item) => total + item.price,
-      0
+      0,
     );
-    const newDate = moment().format('L')
+    // console.log(itemsTotal);
+    const newDate = moment().format("L");
     const orderData = {
       customer: {
         name: `${data.firstName} ${data.lastName}`,
@@ -48,13 +53,12 @@ const OrderForm = () => {
       subtotal: itemsTotal,
       shippingCost,
       totalAmount: itemsTotal + shippingCost,
-      newDate
+      newDate,
     };
     console.log(orderData);
     axiosSecure.post("/orders", orderData).then((res) => {
       if (res.data) {
         toast.success("Order placed successfully ✅");
-        console.log(res.data);
       }
     });
   };
@@ -107,7 +111,9 @@ const OrderForm = () => {
                 </div>
 
                 <div className="w-1/2">
-                  <label className="label font-medium">Last Name <span className=" text-green-600">*</span></label>
+                  <label className="label font-medium">
+                    Last Name <span className=" text-green-600">*</span>
+                  </label>
                   <input
                     type="text"
                     {...register("lastName", { required: true })}
@@ -120,7 +126,9 @@ const OrderForm = () => {
               {/* Address & Email */}
               <div className="flex gap-4">
                 <div className="w-1/2">
-                  <label className="label font-medium">Address <span className=" text-green-600">*</span></label>
+                  <label className="label font-medium">
+                    Address <span className=" text-green-600">*</span>
+                  </label>
                   <input
                     type="text"
                     {...register("address", { required: true })}
@@ -130,7 +138,9 @@ const OrderForm = () => {
                 </div>
 
                 <div className="w-1/2">
-                  <label className="label font-medium">Email <span className=" text-green-600">*</span></label>
+                  <label className="label font-medium">
+                    Email <span className=" text-green-600">*</span>
+                  </label>
                   <input
                     type="email"
                     {...register("email", {
@@ -175,7 +185,9 @@ const OrderForm = () => {
 
               {/* Phone */}
               <div>
-                <label className="label font-medium text-neutral">Phone Number <span className=" text-green-600">*</span></label>
+                <label className="label font-medium text-neutral">
+                  Phone Number <span className=" text-green-600">*</span>
+                </label>
                 <input
                   type="tel"
                   {...register("phone", {
@@ -196,32 +208,35 @@ const OrderForm = () => {
 
             {/* Cart Items */}
             <div className="space-y-4 max-h-64 overflow-y-auto">
-              {carts.map((cart) => {
-                const product = allProducts.find(
-                  (p) => p._id === cart.productId
-                );
-                if (!product) return null;
+              {cart.map((cart) => {
+                if (!cart) return null;
 
                 return (
                   <div
                     key={cart._id}
                     className="flex justify-between items-center border-b pb-3"
                   >
-                    <div>
-                      <h4 className="font-semibold">{product.name}</h4>
-                      <p className="text-sm text-gray-500">
-                        Qty: {cart.quantity}
-                      </p>
+                    <div className="flex items-start gap-6">
+                      <div className="shadow shadow-gray-400">
+                        <img className="w-15" src={cart.images} alt="" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold">{cart.name}</h4>
+                        <p className="text-sm text-gray-500">
+                          Qty: {cart.quantity}
+                        </p>
+                        <p className="font-medium">
+                          TK {cart.price * cart.quantity}
+                        </p>
+                      </div>
                     </div>
-                    <p className="font-medium">
-                      TK {product.price * cart.quantity}
-                    </p>
                   </div>
                 );
               })}
             </div>
 
             <h3 className="font-bold">Subtotal: TK {totalPrice}</h3>
+            <p>Shipping Cost : {0}</p>
 
             {/* Shipping */}
             <div>

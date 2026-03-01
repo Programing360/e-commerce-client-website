@@ -31,7 +31,7 @@ const Navbar = () => {
     if (user?.email !== "fhlimon360@gmail.com") {
       return;
     } else {
-      fetch(`http://localhost:5000/userOrders?email=${user?.email}`, {
+      fetch(`https://e-commerce-server-website.vercel.app/userOrders?email=${user?.email}`, {
         credentials: "include",
       })
         .then((res) => res.json())

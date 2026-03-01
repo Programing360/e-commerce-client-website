@@ -104,12 +104,12 @@ const AllProductCart = ({ product }) => {
         </div>
         <div className="card-actions justify-center">
           <Link to="/order">
-            <button className="btn shadow-gray-500 shadow  bg-[#e17100] text-white">
+            <button className="btn shadow-gray-500 shadow  bg-[#e17100] text-white hover:scale-95">
               Order Now
             </button>
           </Link>
 
-          <div className="shadow-gray-500 shadow rounded-lg">
+          <div className="shadow-gray-500 shadow rounded-lg hover:scale-105">
             <button
               onClick={() => handleAddToCart(_id)}
               className="btn bg-[#727e40] text-white"
